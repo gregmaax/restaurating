@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
+import { HeaderComponent } from './shared/components/header/header.component';
+import { FooterComponent } from './shared/components/footer/footer.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ButtonModule],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent],
   template: `
-    <h1 class="text-amber-700 underline text-5xl m-3">
-      Welcome to {{ title }}!
-    </h1>
-    <p-button label="Clique ici" size="small" class="m-3" />
-
-    <router-outlet />
+    <app-header />
+    <div>
+      <router-outlet />
+    </div>
+    <app-footer />
   `,
   styles: [],
 })
