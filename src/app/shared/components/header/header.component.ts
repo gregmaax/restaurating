@@ -8,7 +8,7 @@ import { UserBadgeComponent } from './ui/user-badge/user-badge.component';
   standalone: true,
   imports: [MenubarModule, UserBadgeComponent],
   template: `
-    <header class="flex justify-evenly">
+    <header class="flex justify-between px-6 border-b-2 border-red-700">
       <div class="flex items-center justify-center">
         <span class="text-amber-700">RESTAURATING</span>
       </div>

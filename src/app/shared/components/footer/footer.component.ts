@@ -5,12 +5,12 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   template: `
-    <p>
-      footer works!
-    </p>
+    <footer
+      class="flex items-center justify-center w-full fixed bottom-0 py-4 border-t-2 border-red-700"
+    >
+      <span class="pi pi-twitter"></span>
+    </footer>
   `,
-  styles: ``
+  styles: ``,
 })
-export class FooterComponent {
-
-}
+export class FooterComponent {}

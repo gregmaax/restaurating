@@ -9,9 +9,11 @@ import { FooterComponent } from './shared/components/footer/footer.component';
   imports: [RouterOutlet, HeaderComponent, FooterComponent],
   template: `
     <app-header />
-    <div>
-      <router-outlet />
-    </div>
+    <main>
+      <div>
+        <router-outlet />
+      </div>
+    </main>
     <app-footer />
   `,
   styles: [],
