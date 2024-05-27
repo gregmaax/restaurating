@@ -1,9 +1,19 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { Category } from '../interfaces/category';
+import { AddCategory, Category } from '../interfaces/category';
 import { FIRESTORE } from '../../app.config';
-import { collection, query, orderBy, limit } from 'firebase/firestore';
+import { collection, query, orderBy, limit, addDoc } from 'firebase/firestore';
 import { collectionData } from 'rxfire/firestore';
-import { map, merge, Observable } from 'rxjs';
+import {
+  map,
+  merge,
+  Observable,
+  defer,
+  Subject,
+  exhaustMap,
+  ignoreElements,
+  catchError,
+  of,
+} from 'rxjs';
 import { connect } from 'ngxtension/connect';
 
 interface CategoryState {
@@ -19,6 +29,7 @@ export class CategoryService {
 
   //sources
   categories$ = this.getCategories();
+  add$ = new Subject<AddCategory>();
 
   //state
   private state = signal<CategoryState>({
@@ -34,11 +45,17 @@ export class CategoryService {
     //reducers
     const nextState$ = merge(
       this.categories$.pipe(map((categories) => ({ categories }))),
+      this.add$.pipe(
+        exhaustMap((category) => this.addCategory(category)),
+        ignoreElements(),
+        catchError((error) => of({ error })),
+      ),
     );
 
     connect(this.state).with(nextState$);
   }
 
+  //get all categories from db
   private getCategories() {
     const categoriesCollection = query(
       collection(this.firestore, 'categories'),
@@ -49,5 +66,20 @@ export class CategoryService {
     return collectionData(categoriesCollection, { idField: 'id' }).pipe(
       map((categories) => [...categories]),
     ) as Observable<Category[]>;
+  }
+
+  //add a category
+  private addCategory(category: AddCategory) {
+    const newCategory: Category = {
+      name: category.name,
+      description: category.description,
+      userId: 'user1',
+      createdAt: Date.now(),
+    };
+
+    console.log(newCategory);
+
+    const categoriesCollection = collection(this.firestore, 'categories');
+    return defer(() => addDoc(categoriesCollection, newCategory));
   }
 }
