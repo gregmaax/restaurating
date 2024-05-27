@@ -8,7 +8,7 @@ import { AddCategoryDialogComponent } from './ui/add-category-dialog/add-categor
   standalone: true,
   imports: [CategoryListComponent, AddCategoryDialogComponent],
   template: `
-    <div class="m-12">
+    <div class="m-12 flex flex-col gap-6">
       <app-add-category-dialog />
       <app-category-list [categories]="categoryService.categories()" />
     </div>
