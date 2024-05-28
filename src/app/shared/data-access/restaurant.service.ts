@@ -109,7 +109,7 @@ export class RestaurantService {
       updatedAt: Date.now(),
       rating: null,
       userId: 'user1',
-      categoryId: 'lReZtwEMESpGz33tunXL',
+      categoryId: restaurant.categoryId,
     };
 
     console.log(newRestaurant);

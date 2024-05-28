@@ -13,5 +13,5 @@ export interface Restaurant {
 
 export type AddRestaurant = Pick<
   Restaurant,
-  'name' | 'address' | 'comment' | 'city'
+  'name' | 'address' | 'comment' | 'city' | 'categoryId'
 >;
