@@ -75,7 +75,7 @@ export class RestaurantService {
   }
 
   //get restaurants by categoryId
-  getRestaurantsByCategory(categoryId: string) {
+  getRestaurantsByCategory(categoryId?: string) {
     const restaurantByCatId = signal<Restaurant[]>([]);
     for (let restaurant of this.restaurants()) {
       if (restaurant.categoryId === categoryId) {

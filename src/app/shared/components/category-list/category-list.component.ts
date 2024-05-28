@@ -6,15 +6,22 @@ import { StyleClassModule } from 'primeng/styleclass';
 import { CategoryCardComponent } from './category-card/category-card.component';
 import { RestaurantService } from '../../data-access/restaurant.service';
 import { Restaurant } from '../../interfaces/restaurant';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-category-list',
   standalone: true,
-  imports: [CardModule, ButtonModule, StyleClassModule, CategoryCardComponent],
+  imports: [
+    CardModule,
+    ButtonModule,
+    StyleClassModule,
+    CategoryCardComponent,
+    RouterLink,
+  ],
   template: `
     <div class="flex flex-row gap-4">
       @for (category of categories(); track category.id) {
-        <a href="/">
+        <a [routerLink]="['/category', category.id]">
           <app-category-card
             [categoryName]="category.name"
             [categoryDesc]="category.description"

@@ -10,6 +10,10 @@ export const routes: Routes = [
     loadComponent: () => import('./categories/categories.component'),
   },
   {
+    path: 'category/:id',
+    loadComponent: () => import('./category-detail/category-detail.component'),
+  },
+  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
