@@ -1,28 +1,34 @@
 import { Component, inject, signal } from '@angular/core';
-import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
 import { CategoryFormComponent } from '../category-form/category-form.component';
-import { CategoryService } from '../../data-access/category.service';
+import { DialogModule } from 'primeng/dialog';
 import { FormBuilder, Validators } from '@angular/forms';
+import { RestaurantService } from '../../data-access/restaurant.service';
+import { RestaurantFormComponent } from '../restaurant-form/restaurant-form.component';
 
 @Component({
-  selector: 'app-add-category-dialog',
+  selector: 'app-add-restaurant-dialog',
   standalone: true,
-  imports: [DialogModule, ButtonModule, InputTextModule, CategoryFormComponent],
+  imports: [
+    ButtonModule,
+    CategoryFormComponent,
+    DialogModule,
+    RestaurantFormComponent,
+  ],
   template: `
     <p-button
       (click)="showDialog()"
-      label="Ajouter une catégorie"
+      label="Ajouter un restaurant"
       size="small"
+      severity="secondary"
     />
     <p-dialog
-      header="Nouvelle catégorie"
+      header="Nouveau restaurant"
       [modal]="true"
       [(visible)]="visible"
       [style]="{ width: '25rem' }"
     >
-      <app-category-form [formGroup]="categoryForm" />
+      <app-restaurant-form [formGroup]="restaurantForm" />
       <div class="flex justify-content-end gap-2 py-3">
         <p-button
           label="Annuler"
@@ -36,17 +42,19 @@ import { FormBuilder, Validators } from '@angular/forms';
   `,
   styles: ``,
 })
-export class AddCategoryDialogComponent {
+export class AddRestaurantDialogComponent {
   visible = signal(false);
-  categoryService = inject(CategoryService);
+  restaurantService = inject(RestaurantService);
   formBuilder = inject(FormBuilder);
 
-  categoryForm = this.formBuilder.nonNullable.group({
+  restaurantForm = this.formBuilder.nonNullable.group({
     name: [
       '',
       [Validators.required, Validators.minLength(3), Validators.maxLength(25)],
     ],
-    description: [''],
+    comment: [''],
+    address: [''],
+    city: [''],
   });
 
   showDialog() {
@@ -55,12 +63,12 @@ export class AddCategoryDialogComponent {
 
   onSave() {
     this.visible.set(false);
-    this.categoryService.add$.next(this.categoryForm.getRawValue());
-    this.categoryForm.reset();
+    this.restaurantService.add$.next(this.restaurantForm.getRawValue());
+    this.restaurantForm.reset();
   }
 
   onCancel() {
     this.visible.set(false);
-    this.categoryForm.reset();
+    this.restaurantForm.reset();
   }
 }

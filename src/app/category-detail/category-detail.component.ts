@@ -6,33 +6,34 @@ import { CategoryService } from '../shared/data-access/category.service';
 import { RestaurantService } from '../shared/data-access/restaurant.service';
 import { ButtonModule } from 'primeng/button';
 import { Location } from '@angular/common';
+import { AddRestaurantDialogComponent } from '../shared/components/add-restaurant-dialog/add-restaurant-dialog.component';
 
 @Component({
   selector: 'app-category-detail',
   standalone: true,
-  imports: [RestaurantListComponent, ButtonModule],
+  imports: [
+    RestaurantListComponent,
+    ButtonModule,
+    AddRestaurantDialogComponent,
+  ],
   template: `
     <div class="m-12 flex flex-col gap-6">
+      <div class="flex flex-col gap-10">
+        <div class="flex flex-row gap-2">
+          <p-button label="Retour" size="small" (onClick)="location.back()" />
+          <app-add-restaurant-dialog />
+        </div>
+      </div>
       @if (
         restaurantService.getRestaurantsByCategory(category()?.id).length > 0
       ) {
-        <div class="flex flex-col gap-10">
-          <div>
-            <p-button label="Retour" size="small" (onClick)="location.back()" />
-          </div>
-          <app-restaurant-list
-            [restaurants]="
-              restaurantService.getRestaurantsByCategory(category()?.id)
-            "
-          />
-        </div>
+        <app-restaurant-list
+          [restaurants]="
+            restaurantService.getRestaurantsByCategory(category()?.id)
+          "
+        />
       } @else {
-        <div class="flex flex-col gap-10">
-          <div>
-            <p-button label="Retour" size="small" (onClick)="location.back()" />
-          </div>
-          <span>Aucun restaurant ajouté.</span>
-        </div>
+        <span>Aucun restaurant ajouté.</span>
       }
     </div>
   `,
