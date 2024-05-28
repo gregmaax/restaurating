@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuItem } from 'primeng/api';
-import { UserBadgeComponent } from './ui/user-badge/user-badge.component';
+import { UserBadgeComponent } from './user-badge/user-badge.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [MenubarModule, UserBadgeComponent],
   template: `
-    <header class="flex justify-between px-6 border-b-2 border-red-700">
+    <header class="flex justify-between px-6 border-b-[1px] border-blue-700">
       <div class="flex items-center justify-center">
-        <span class="text-amber-700">RESTAURATING</span>
+        <span class="text-blue-700">RESTAURATING</span>
       </div>
       <div class="flex items-center justify-center">
         <p-menubar [model]="items" [styleClass]="'border-none'">

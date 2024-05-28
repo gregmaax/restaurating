@@ -3,7 +3,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { CategoryFormComponent } from '../category-form/category-form.component';
-import { CategoryService } from '../../../shared/data-access/category.service';
+import { CategoryService } from '../../data-access/category.service';
 import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
