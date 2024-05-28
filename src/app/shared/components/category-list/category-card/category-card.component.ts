@@ -6,7 +6,7 @@ import { Component, effect, input } from '@angular/core';
   imports: [],
   template: `
     <div
-      class="overflow-hidden shadow-md w-[240px] h-[280px] mx-auto sm:px-6 lg:px-8 border-[1px] border-blue-600 rounded"
+      class="overflow-hidden shadow-md w-[250px] h-[280px] mx-auto sm:px-6 lg:px-8 border-[1px] border-blue-600 rounded"
     >
       <!-- card header -->
       <div

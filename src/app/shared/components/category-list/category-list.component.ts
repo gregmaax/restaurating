@@ -19,7 +19,7 @@ import { RouterLink } from '@angular/router';
     RouterLink,
   ],
   template: `
-    <div class="flex flex-row gap-4">
+    <div class="flex flex-row flex-wrap gap-4 p-3">
       @for (category of categories(); track category.id) {
         <a [routerLink]="['/category', category.id]">
           <app-category-card

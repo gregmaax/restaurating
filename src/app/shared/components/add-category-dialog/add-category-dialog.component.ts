@@ -15,6 +15,7 @@ import { FormBuilder, Validators } from '@angular/forms';
       (click)="showDialog()"
       label="Ajouter une catégorie"
       size="small"
+      class="p-3"
     />
     <p-dialog
       header="Nouvelle catégorie"
