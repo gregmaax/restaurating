@@ -1,5 +1,9 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { AddRestaurant, Restaurant } from '../interfaces/restaurant';
+import {
+  AddRestaurant,
+  DeleteRestaurant,
+  Restaurant,
+} from '../interfaces/restaurant';
 import { FIRESTORE } from '../../app.config';
 import {
   collection,
@@ -7,7 +11,9 @@ import {
   orderBy,
   limit,
   addDoc,
+  deleteDoc,
   where,
+  doc,
 } from 'firebase/firestore';
 import {
   catchError,
@@ -37,6 +43,7 @@ export class RestaurantService {
   //sources
   restaurants$ = this.getRestaurants();
   add$ = new Subject<AddRestaurant>();
+  delete$ = new Subject<DeleteRestaurant>();
 
   //state
   private state = signal<RestaurantState>({
@@ -57,11 +64,16 @@ export class RestaurantService {
         ignoreElements(),
         catchError((error) => of({ error })),
       ),
+      this.delete$.pipe(
+        exhaustMap((id) => this.deleteRestaurant(id)),
+        ignoreElements(),
+        catchError((error) => of({ error })),
+      ),
     );
     connect(this.state).with(nextState$);
   }
 
-  //
+  //get restaurant count for a category
   countRestaurantsInCategory(categoryId?: string) {
     let count = 0;
     if (categoryId) {
@@ -72,6 +84,11 @@ export class RestaurantService {
       }
     }
     return count;
+  }
+  //delete a restaurant
+  deleteRestaurant(restaurantId?: string): Promise<void> {
+    const restaurantDocRef = doc(this.firestore, `restaurants/${restaurantId}`);
+    return deleteDoc(restaurantDocRef);
   }
 
   //get restaurants by categoryId
@@ -107,7 +124,7 @@ export class RestaurantService {
       city: restaurant.city,
       createdAt: Date.now(),
       updatedAt: Date.now(),
-      rating: null,
+      //rating: 0,
       userId: 'user1',
       categoryId: restaurant.categoryId,
     };
