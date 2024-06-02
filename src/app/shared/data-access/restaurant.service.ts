@@ -86,7 +86,7 @@ export class RestaurantService {
     return count;
   }
   //delete a restaurant
-  deleteRestaurant(restaurantId?: string): Promise<void> {
+  private deleteRestaurant(restaurantId?: string): Promise<void> {
     const restaurantDocRef = doc(this.firestore, `restaurants/${restaurantId}`);
     return deleteDoc(restaurantDocRef);
   }
