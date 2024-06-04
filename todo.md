@@ -1,1 +1,1 @@
-[] fix the layout for the restaurant card
+[x] fix the layout for the restaurant card

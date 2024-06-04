@@ -11,11 +11,11 @@ import { DatePipe } from '@angular/common';
   imports: [ButtonModule, RatingModule, FormsModule, DatePipe],
   template: `
     <div
-      class="overflow-hidden shadow-md w-[250px] h-[290px] mx-auto sm:px-6 lg:px-8 border-[1px] border-blue-600 rounded"
+      class="overflow-hidden shadow-md w-[250px] h-[300px] mx-auto sm:px-6 lg:px-8 border-[1px] border-blue-600 rounded"
     >
       <!-- card header -->
       <div
-        class="px-6 py-4 bg-white border-b border-gray-200 font-bold uppercase text-center"
+        class="h-[90px] px-4 py-4 bg-white border-b border-gray-200 font-bold uppercase flex justify-center items-center text-center"
       >
         {{ restaurantName() }}
       </div>
