@@ -65,7 +65,7 @@ export class AddRestaurantDialogComponent {
       [Validators.required, Validators.minLength(3), Validators.maxLength(25)],
     ],
     comment: [''],
-    address: [''],
+    rating: ['', [Validators.min(0), Validators.max(5)]],
     city: [''],
   });
 
@@ -76,7 +76,7 @@ export class AddRestaurantDialogComponent {
   onSave() {
     this.visible.set(false);
     this.restaurantService.add$.next({
-      address: this.restaurantForm.value.address as string,
+      rating: this.restaurantForm.value.rating as unknown as number,
       categoryId: this.category()?.id as string,
       city: this.restaurantForm.value.city as string,
       comment: this.restaurantForm.value.comment as string,

@@ -17,6 +17,7 @@ import { RestaurantService } from '../../data-access/restaurant.service';
             [restaurantRating]="restaurant.rating"
             [restaurantId]="restaurant.id"
             (deleteRestaurant)="restaurantService.delete$.next($event)"
+            [lastUpdatedAt]="restaurant.updatedAt"
           />
         </a>
       }

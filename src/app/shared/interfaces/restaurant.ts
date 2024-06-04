@@ -13,7 +13,7 @@ export interface Restaurant {
 
 export type AddRestaurant = Pick<
   Restaurant,
-  'name' | 'address' | 'comment' | 'city' | 'categoryId'
+  'name' | 'rating' | 'comment' | 'city' | 'categoryId'
 >;
 
 export type DeleteRestaurant = Restaurant['id'];

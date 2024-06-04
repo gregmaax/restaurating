@@ -1,4 +1,4 @@
-import { ApplicationConfig, InjectionToken } from '@angular/core';
+import { ApplicationConfig, InjectionToken, LOCALE_ID } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { initializeApp } from 'firebase/app';
 import {
@@ -43,5 +43,9 @@ export const FIRESTORE = new InjectionToken('Firebase firestore', {
 });
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideAnimationsAsync()],
+  providers: [
+    provideRouter(routes),
+    provideAnimationsAsync(),
+    { provide: LOCALE_ID, useValue: 'fr-FR' },
+  ],
 };

@@ -6,10 +6,9 @@ import { AvatarModule } from 'primeng/avatar';
   standalone: true,
   imports: [AvatarModule],
   template: `
-    <div class="flex items-center justify-center">
+    <div class="flex items-center gap-2">
       <p-avatar
         [label]="getFirstLetter(username())"
-        styleClass="mr-2"
         [style]="{ 'background-color': '#dee9fc', color: '#1a2551' }"
         shape="circle"
       />

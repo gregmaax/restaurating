@@ -10,7 +10,9 @@ import { UserBadgeComponent } from './user-badge/user-badge.component';
   template: `
     <header class="flex justify-between px-6 border-b-[1px] border-blue-700">
       <div class="flex items-center justify-center">
-        <span class="text-blue-700">RESTAURATING</span>
+        <span class="self-center font-semibold whitespace-nowrap"
+          >RESTAURATING</span
+        >
       </div>
       <div class="flex items-center justify-center">
         <p-menubar [model]="items" [styleClass]="'border-none'">

@@ -1,14 +1,17 @@
-import { Component, input, output } from '@angular/core';
+import { Component, Input, input, output } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { DeleteRestaurant } from '../../../interfaces/restaurant';
+import { RatingModule } from 'primeng/rating';
+import { FormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-restaurant-card',
   standalone: true,
-  imports: [ButtonModule],
+  imports: [ButtonModule, RatingModule, FormsModule, DatePipe],
   template: `
     <div
-      class="overflow-hidden shadow-md w-[250px] h-[280px] mx-auto sm:px-6 lg:px-8 border-[1px] border-blue-600 rounded"
+      class="overflow-hidden shadow-md w-[250px] h-[290px] mx-auto sm:px-6 lg:px-8 border-[1px] border-blue-600 rounded"
     >
       <!-- card header -->
       <div
@@ -18,10 +21,16 @@ import { DeleteRestaurant } from '../../../interfaces/restaurant';
       </div>
 
       <!-- card body -->
-      <div class="bg-white border-b border-gray-200 h-32 p-2 text-center">
+      <div class="bg-white border-b border-gray-200 h-32 p-10 text-center">
         <!-- content goes here -->
-        @if (restaurantRating()) {
-          <small>{{ restaurantRating() }}</small>
+        @if (restaurantRating) {
+          <div class="card flex justify-center items-center">
+            <p-rating
+              [(ngModel)]="restaurantRating"
+              [readonly]="true"
+              [cancel]="false"
+            />
+          </div>
         } @else {
           <small>Aucune note</small>
         }
@@ -29,9 +38,9 @@ import { DeleteRestaurant } from '../../../interfaces/restaurant';
 
       <!-- card footer -->
       <div
-        class="bg-white border-gray-200 h-[70px] text-right bottom-0 flex justify-center items-center w-full py-3"
+        class="bg-white border-gray-200 h-[70px] text-right bottom-0 flex justify-center items-center w-full py-2"
       >
-        <div class="text-center flex flex-col gap-3">
+        <div class="text-center flex flex-col gap-2">
           <div class="flex justify-center items-center gap-4">
             <p-button
               size="small"
@@ -49,7 +58,7 @@ import { DeleteRestaurant } from '../../../interfaces/restaurant';
               (click)="deleteRestaurant.emit(restaurantId())"
             />
           </div>
-          <small> Mis à jour le 02/06.</small>
+          <small> Mis à jour le {{ lastUpdatedAt() | date }}.</small>
         </div>
       </div>
     </div>
@@ -57,9 +66,10 @@ import { DeleteRestaurant } from '../../../interfaces/restaurant';
   styles: ``,
 })
 export class RestaurantCardComponent {
+  @Input() restaurantRating: number | undefined;
   restaurantName = input.required<string>();
-  restaurantRating = input<number>();
   restaurantId = input.required<DeleteRestaurant>();
+  lastUpdatedAt = input<number>();
   deleteRestaurant = output<DeleteRestaurant>();
   protected readonly console = console;
 }

@@ -4,6 +4,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { PaginatorModule } from 'primeng/paginator';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NgClass } from '@angular/common';
+import { RatingModule } from 'primeng/rating';
 
 @Component({
   selector: 'app-restaurant-form',
@@ -14,16 +15,15 @@ import { NgClass } from '@angular/common';
     PaginatorModule,
     ReactiveFormsModule,
     NgClass,
+    RatingModule,
   ],
   template: `
     <form [formGroup]="formGroup">
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col gap-1">
         <label
           [ngClass]="{
             'text-red-600':
-              formGroup.invalid &&
-              formGroup.controls['name'].touched &&
-              formGroup.controls['name'].errors
+              formGroup.invalid && formGroup.controls['name'].errors
           }"
           for="restaurant-name"
           >Nom</label
@@ -34,16 +34,10 @@ import { NgClass } from '@angular/common';
           formControlName="name"
           [ngClass]="{
             'ng-invalid ng-dirty':
-              formGroup.invalid &&
-              formGroup.controls['name'].touched &&
-              formGroup.controls['name'].errors
+              formGroup.invalid && formGroup.controls['name'].errors
           }"
         />
-        @if (
-          formGroup.invalid &&
-          formGroup.controls['name'].touched &&
-          formGroup.controls['name'].errors
-        ) {
+        @if (formGroup.invalid && formGroup.controls['name'].errors) {
           <small class="text-red-600 text-xs ml-2">
             Le titre doit contenir entre 3 et 25 caractères...
           </small>
@@ -51,7 +45,7 @@ import { NgClass } from '@angular/common';
       </div>
       <div class="mt-2">
         <textarea
-          id="restaurant-desc"
+          id="restaurant-comment"
           rows="2"
           cols="36"
           formControlName="comment"
@@ -60,12 +54,12 @@ import { NgClass } from '@angular/common';
         >
         </textarea>
       </div>
-      <div class="flex flex-col gap-2">
-        <label for="restaurant-address">Address</label>
-        <input pInputText id="restaurant-address" formControlName="address" />
+      <div class="flex flex-col gap-1">
+        <label for="restaurant-rating">Note</label>
+        <p-rating formControlName="rating" />
       </div>
-      <div class="flex flex-col gap-2">
-        <label for="restaurant-city">City</label>
+      <div class="flex flex-col gap-1 mt-2">
+        <label for="restaurant-city">Ville</label>
         <input pInputText id="restaurant-city" formControlName="city" />
       </div>
     </form>

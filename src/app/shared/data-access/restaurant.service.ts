@@ -120,11 +120,11 @@ export class RestaurantService {
     const newRestaurant: Restaurant = {
       name: restaurant.name,
       comment: restaurant.comment,
-      address: restaurant.address,
+      rating: restaurant.rating,
       city: restaurant.city,
       createdAt: Date.now(),
       updatedAt: Date.now(),
-      //rating: 0,
+      address: 'default',
       userId: 'user1',
       categoryId: restaurant.categoryId,
     };
