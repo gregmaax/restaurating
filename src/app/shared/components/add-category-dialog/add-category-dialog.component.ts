@@ -5,11 +5,22 @@ import { DialogModule } from 'primeng/dialog';
 import { CategoryFormComponent } from '../category-form/category-form.component';
 import { CategoryService } from '../../data-access/category.service';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { RippleModule } from 'primeng/ripple';
 
 @Component({
   selector: 'app-add-category-dialog',
   standalone: true,
-  imports: [DialogModule, ButtonModule, InputTextModule, CategoryFormComponent],
+  imports: [
+    DialogModule,
+    ButtonModule,
+    InputTextModule,
+    CategoryFormComponent,
+    ToastModule,
+    RippleModule,
+  ],
+  providers: [MessageService],
   template: `
     <p-button
       (click)="showDialog()"
@@ -17,6 +28,7 @@ import { FormBuilder, Validators } from '@angular/forms';
       size="small"
       class="p-3"
     />
+    <p-toast position="bottom-center" key="bc" />
     <p-dialog
       header="Nouvelle catégorie"
       [modal]="true"
@@ -31,7 +43,7 @@ import { FormBuilder, Validators } from '@angular/forms';
           (click)="onCancel()"
           size="small"
         />
-        <p-button label="Ajouter" (click)="onSave()" size="small" />
+        <p-button label="Ajouter" pRipple (click)="onSave()" size="small" />
       </div>
     </p-dialog>
   `,
@@ -41,6 +53,7 @@ export class AddCategoryDialogComponent {
   visible = signal(false);
   categoryService = inject(CategoryService);
   formBuilder = inject(FormBuilder);
+  messageService = inject(MessageService);
 
   categoryForm = this.formBuilder.nonNullable.group({
     name: [
@@ -58,6 +71,11 @@ export class AddCategoryDialogComponent {
     this.visible.set(false);
     this.categoryService.add$.next(this.categoryForm.getRawValue());
     this.categoryForm.reset();
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Catégorie ajoutée',
+      key: 'bc',
+    });
   }
 
   onCancel() {

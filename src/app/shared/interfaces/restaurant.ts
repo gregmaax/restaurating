@@ -17,3 +17,7 @@ export type AddRestaurant = Pick<
 >;
 
 export type DeleteRestaurant = Restaurant['id'];
+
+export type UpdateRestaurant = Pick<Restaurant, 'id' | 'name' | 'rating'>;
+
+export type UpdateRestaurantComment = Pick<Restaurant, 'id' | 'comment'>;
