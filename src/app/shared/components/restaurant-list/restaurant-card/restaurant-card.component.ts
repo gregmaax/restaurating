@@ -95,7 +95,6 @@ export class RestaurantCardComponent {
   protected readonly console = console;
 
   confirmationService = inject(ConfirmationService);
-  messageService = inject(MessageService);
 
   confirmDelete(event: Event) {
     this.confirmationService.confirm({
