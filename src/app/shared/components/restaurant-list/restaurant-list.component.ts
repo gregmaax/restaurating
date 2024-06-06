@@ -15,9 +15,7 @@ import { ToastModule } from 'primeng/toast';
       @for (restaurant of restaurants(); track restaurant.id) {
         <a>
           <app-restaurant-card
-            [restaurantName]="restaurant.name"
-            [restaurantRating]="restaurant.rating"
-            [restaurantId]="restaurant.id"
+            [restaurant]="restaurant"
             (deleteRestaurant)="restaurantService.delete$.next($event)"
             [lastUpdatedAt]="restaurant.updatedAt"
           />

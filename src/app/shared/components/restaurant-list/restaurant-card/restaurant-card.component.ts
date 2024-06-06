@@ -1,12 +1,13 @@
 import { Component, inject, Input, input, output } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
-import { DeleteRestaurant } from '../../../interfaces/restaurant';
+import { DeleteRestaurant, Restaurant } from '../../../interfaces/restaurant';
 import { RatingModule } from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { UpdateRestaurantDialogComponent } from '../update-restaurant-dialog/update-restaurant-dialog.component';
 
 @Component({
   selector: 'app-restaurant-card',
@@ -18,6 +19,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     DatePipe,
     ConfirmDialogModule,
     ToastModule,
+    UpdateRestaurantDialogComponent,
   ],
   providers: [ConfirmationService, MessageService],
   template: `
@@ -28,16 +30,16 @@ import { ConfirmationService, MessageService } from 'primeng/api';
       <div
         class="h-[90px] px-4 py-4 bg-white border-b border-gray-200 font-bold uppercase flex justify-center items-center text-center"
       >
-        {{ restaurantName() }}
+        {{ restaurant().name }}
       </div>
 
       <!-- card body -->
       <div class="bg-white border-b border-gray-200 h-32 p-10 text-center">
         <!-- content goes here -->
-        @if (restaurantRating) {
+        @if (restaurant().rating) {
           <div class="card flex justify-center items-center">
             <p-rating
-              [(ngModel)]="restaurantRating"
+              [(ngModel)]="restaurant().rating"
               [readonly]="true"
               [cancel]="false"
             />
@@ -58,15 +60,9 @@ import { ConfirmationService, MessageService } from 'primeng/api';
               icon="pi pi-comment"
               [rounded]="true"
               [text]="true"
-              (click)="console.log('add comment button')"
-            />
-            <p-button
-              size="small"
-              icon="pi pi-pencil"
-              [rounded]="true"
-              [text]="true"
               (click)="console.log('update button')"
             />
+            <app-update-restaurant-dialog [restaurantToUpdate]="restaurant()" />
             <div>
               <p-confirmDialog />
               <p-button
@@ -87,9 +83,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
   styles: ``,
 })
 export class RestaurantCardComponent {
-  @Input() restaurantRating: number | undefined;
-  restaurantName = input.required<string>();
-  restaurantId = input.required<DeleteRestaurant>();
+  restaurant = input.required<Restaurant>();
   lastUpdatedAt = input<number>();
   deleteRestaurant = output<DeleteRestaurant>();
   protected readonly console = console;
@@ -109,7 +103,7 @@ export class RestaurantCardComponent {
       acceptButtonStyleClass: 'p-button-danger p-button-text',
       rejectButtonStyleClass: 'p-button-text p-button-text',
       accept: () => {
-        this.deleteRestaurant.emit(this.restaurantId());
+        this.deleteRestaurant.emit(this.restaurant().id);
       },
       reject: () => {},
     });

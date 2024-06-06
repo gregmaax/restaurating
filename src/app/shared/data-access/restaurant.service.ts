@@ -3,6 +3,7 @@ import {
   AddRestaurant,
   DeleteRestaurant,
   Restaurant,
+  UpdateRestaurant,
 } from '../interfaces/restaurant';
 import { FIRESTORE } from '../../app.config';
 import {
@@ -11,6 +12,7 @@ import {
   orderBy,
   limit,
   addDoc,
+  updateDoc,
   deleteDoc,
   where,
   doc,
@@ -44,6 +46,7 @@ export class RestaurantService {
   restaurants$ = this.getRestaurants();
   add$ = new Subject<AddRestaurant>();
   delete$ = new Subject<DeleteRestaurant>();
+  update$ = new Subject<UpdateRestaurant>();
 
   //state
   private state = signal<RestaurantState>({
@@ -69,6 +72,13 @@ export class RestaurantService {
         ignoreElements(),
         catchError((error) => of({ error })),
       ),
+      this.update$.pipe(
+        exhaustMap((updatedRestaurant) =>
+          this.updateRestaurantNameAndRating(updatedRestaurant),
+        ),
+        ignoreElements(),
+        catchError((error) => of({ error })),
+      ),
     );
     connect(this.state).with(nextState$);
   }
@@ -84,6 +94,18 @@ export class RestaurantService {
       }
     }
     return count;
+  }
+
+  //update a restaurant
+  private updateRestaurantNameAndRating(restaurant: UpdateRestaurant) {
+    const updatedRestaurantNameAndRating = doc(
+      this.firestore,
+      `restaurants/${restaurant.id}`,
+    );
+    return updateDoc(updatedRestaurantNameAndRating, {
+      name: restaurant.name,
+      rating: restaurant.rating,
+    });
   }
   //delete a restaurant
   private deleteRestaurant(restaurantId?: string): Promise<void> {
