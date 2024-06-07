@@ -19,7 +19,7 @@ import { NgClass } from '@angular/common';
   ],
   template: `
     <form [formGroup]="formGroup">
-      <div class="flex flex-col gap-1">
+      <div class="flex flex-col items-start gap-1">
         <label
           [ngClass]="{
             'text-red-600':
@@ -32,6 +32,7 @@ import { NgClass } from '@angular/common';
           pInputText
           id="restaurant-name"
           formControlName="name"
+          class="w-full"
           [ngClass]="{
             'ng-invalid ng-dirty':
               formGroup.invalid && formGroup.controls['name'].errors
@@ -43,7 +44,7 @@ import { NgClass } from '@angular/common';
           </small>
         }
       </div>
-      <div class="flex flex-col gap-1">
+      <div class="flex flex-col items-start mt-2 gap-1">
         <label for="restaurant-rating">Note</label>
         <p-rating formControlName="rating" />
       </div>

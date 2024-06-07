@@ -8,15 +8,18 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
   imports: [InputTextareaModule, ReactiveFormsModule],
   template: `
     <form [formGroup]="formGroup">
-      <textarea
-        id="restaurant-comment"
-        rows="2"
-        cols="36"
-        formControlName="comment"
-        placeholder="Comment..."
-        pInputTextarea
-      >
-      </textarea>
+      <div class="flex flex-col items-start mt-2 gap-2">
+        <small>Qu'avez-vous pensé de ce restaurant ?</small>
+        <textarea
+          id="restaurant-comment"
+          rows="2"
+          cols="36"
+          formControlName="comment"
+          placeholder="Comment..."
+          pInputTextarea
+        >
+        </textarea>
+      </div>
     </form>
   `,
   styles: ``,

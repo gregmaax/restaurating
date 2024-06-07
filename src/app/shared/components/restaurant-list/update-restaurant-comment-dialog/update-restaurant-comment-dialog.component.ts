@@ -31,7 +31,7 @@ import { RestaurantCommentFormComponent } from './restaurant-comment-form/restau
       [text]="true"
     />
     <p-dialog
-      header="Modifier ce restaurant"
+      header="Modifier ce commentaire"
       [modal]="true"
       [(visible)]="visible"
       [style]="{ width: '25rem' }"
@@ -44,7 +44,7 @@ import { RestaurantCommentFormComponent } from './restaurant-comment-form/restau
           (click)="onCancel()"
           size="small"
         />
-        <p-button label="Ajouter" (click)="onSave()" size="small" />
+        <p-button label="Modifier" (click)="onSave()" size="small" />
       </div>
     </p-dialog>
   `,

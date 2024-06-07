@@ -43,13 +43,14 @@ import { RatingModule } from 'primeng/rating';
           </small>
         }
       </div>
-      <div class="mt-2">
+      <div class="flex flex-col mt-2 gap-2">
+        <small>Qu'avez-vous pensé de ce restaurant ?</small>
         <textarea
           id="restaurant-comment"
           rows="2"
           cols="36"
           formControlName="comment"
-          placeholder="Comment..."
+          placeholder=""
           pInputTextarea
         >
         </textarea>
