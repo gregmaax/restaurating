@@ -17,7 +17,6 @@ import { ToastModule } from 'primeng/toast';
           <app-restaurant-card
             [restaurant]="restaurant"
             (deleteRestaurant)="restaurantService.delete$.next($event)"
-            [lastUpdatedAt]="restaurant.updatedAt"
           />
         </a>
       }

@@ -113,6 +113,7 @@ export class RestaurantService {
     );
     return updateDoc(updatedRestaurantComment, {
       comment: restaurant.comment,
+      updatedAt: Date.now(),
     });
   }
 
@@ -125,6 +126,7 @@ export class RestaurantService {
     return updateDoc(updatedRestaurantNameAndRating, {
       name: restaurant.name,
       rating: restaurant.rating,
+      updatedAt: Date.now(),
     });
   }
 
@@ -166,7 +168,6 @@ export class RestaurantService {
       rating: restaurant.rating,
       city: restaurant.city,
       createdAt: Date.now(),
-      updatedAt: Date.now(),
       address: 'default',
       userId: 'user1',
       categoryId: restaurant.categoryId,

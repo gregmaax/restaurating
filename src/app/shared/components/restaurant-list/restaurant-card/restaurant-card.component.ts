@@ -73,7 +73,11 @@ import { UpdateRestaurantCommentDialogComponent } from '../update-restaurant-com
               />
             </div>
           </div>
-          <small> Mis à jour le {{ lastUpdatedAt() | date }}.</small>
+          @if (!restaurant().updatedAt && restaurant().createdAt) {
+            <small> Ajouté le {{ restaurant().createdAt | date }}.</small>
+          } @else if (restaurant().updatedAt) {
+            <small> Mis à jour le {{ restaurant().updatedAt | date }}.</small>
+          }
         </div>
       </div>
     </div>

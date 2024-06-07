@@ -5,7 +5,7 @@ export interface Restaurant {
   address?: string;
   city: string;
   createdAt: number;
-  updatedAt: number;
+  updatedAt?: number;
   rating?: number;
   userId: string;
   categoryId: string | null;
@@ -18,6 +18,12 @@ export type AddRestaurant = Pick<
 
 export type DeleteRestaurant = Restaurant['id'];
 
-export type UpdateRestaurant = Pick<Restaurant, 'id' | 'name' | 'rating'>;
+export type UpdateRestaurant = Pick<
+  Restaurant,
+  'id' | 'name' | 'rating' | 'updatedAt'
+>;
 
-export type UpdateRestaurantComment = Pick<Restaurant, 'id' | 'comment'>;
+export type UpdateRestaurantComment = Pick<
+  Restaurant,
+  'id' | 'comment' | 'updatedAt'
+>;
