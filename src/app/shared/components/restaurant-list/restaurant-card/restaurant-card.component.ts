@@ -8,6 +8,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { UpdateRestaurantDialogComponent } from '../update-restaurant-dialog/update-restaurant-dialog.component';
+import { UpdateRestaurantCommentDialogComponent } from '../update-restaurant-comment-dialog/update-restaurant-comment-dialog.component';
 
 @Component({
   selector: 'app-restaurant-card',
@@ -20,6 +21,7 @@ import { UpdateRestaurantDialogComponent } from '../update-restaurant-dialog/upd
     ConfirmDialogModule,
     ToastModule,
     UpdateRestaurantDialogComponent,
+    UpdateRestaurantCommentDialogComponent,
   ],
   providers: [ConfirmationService, MessageService],
   template: `
@@ -55,12 +57,8 @@ import { UpdateRestaurantDialogComponent } from '../update-restaurant-dialog/upd
       >
         <div class="text-center flex flex-col gap-2">
           <div class="flex justify-center items-center gap-4">
-            <p-button
-              size="small"
-              icon="pi pi-comment"
-              [rounded]="true"
-              [text]="true"
-              (click)="console.log('update button')"
+            <app-update-restaurant-comment-dialog
+              [restaurantToUpdate]="restaurant()"
             />
             <app-update-restaurant-dialog [restaurantToUpdate]="restaurant()" />
             <div>

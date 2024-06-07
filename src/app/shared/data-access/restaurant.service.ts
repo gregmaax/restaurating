@@ -4,6 +4,7 @@ import {
   DeleteRestaurant,
   Restaurant,
   UpdateRestaurant,
+  UpdateRestaurantComment,
 } from '../interfaces/restaurant';
 import { FIRESTORE } from '../../app.config';
 import {
@@ -46,7 +47,8 @@ export class RestaurantService {
   restaurants$ = this.getRestaurants();
   add$ = new Subject<AddRestaurant>();
   delete$ = new Subject<DeleteRestaurant>();
-  update$ = new Subject<UpdateRestaurant>();
+  updateNameAndRating$ = new Subject<UpdateRestaurant>();
+  updateComment$ = new Subject<UpdateRestaurantComment>();
 
   //state
   private state = signal<RestaurantState>({
@@ -72,9 +74,16 @@ export class RestaurantService {
         ignoreElements(),
         catchError((error) => of({ error })),
       ),
-      this.update$.pipe(
+      this.updateNameAndRating$.pipe(
         exhaustMap((updatedRestaurant) =>
           this.updateRestaurantNameAndRating(updatedRestaurant),
+        ),
+        ignoreElements(),
+        catchError((error) => of({ error })),
+      ),
+      this.updateComment$.pipe(
+        exhaustMap((updateComment) =>
+          this.updateRestaurantComment(updateComment),
         ),
         ignoreElements(),
         catchError((error) => of({ error })),
@@ -96,7 +105,18 @@ export class RestaurantService {
     return count;
   }
 
-  //update a restaurant
+  //update a restaurant name and rating
+  private updateRestaurantComment(restaurant: UpdateRestaurantComment) {
+    const updatedRestaurantComment = doc(
+      this.firestore,
+      `restaurants/${restaurant.id}`,
+    );
+    return updateDoc(updatedRestaurantComment, {
+      comment: restaurant.comment,
+    });
+  }
+
+  //update a restaurant name and rating
   private updateRestaurantNameAndRating(restaurant: UpdateRestaurant) {
     const updatedRestaurantNameAndRating = doc(
       this.firestore,
@@ -107,8 +127,9 @@ export class RestaurantService {
       rating: restaurant.rating,
     });
   }
+
   //delete a restaurant
-  private deleteRestaurant(restaurantId?: string): Promise<void> {
+  private deleteRestaurant(restaurantId?: string) {
     const restaurantDocRef = doc(this.firestore, `restaurants/${restaurantId}`);
     return deleteDoc(restaurantDocRef);
   }

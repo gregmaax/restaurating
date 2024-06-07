@@ -3,31 +3,30 @@ import {
   Component,
   inject,
   input,
-  OnInit,
   signal,
 } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
-import { RestaurantFormComponent } from '../../restaurant-form/restaurant-form.component';
-import { RestaurantNameRatingFormComponent } from './restaurant-name-rating-form/restaurant-name-rating-form.component';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { RestaurantNameRatingFormComponent } from '../update-restaurant-dialog/restaurant-name-rating-form/restaurant-name-rating-form.component';
 import { Restaurant } from '../../../interfaces/restaurant';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RestaurantService } from '../../../data-access/restaurant.service';
+import { RestaurantCommentFormComponent } from './restaurant-comment-form/restaurant-comment-form.component';
 
 @Component({
-  selector: 'app-update-restaurant-dialog',
+  selector: 'app-update-restaurant-comment-dialog',
   standalone: true,
   imports: [
     ButtonModule,
     DialogModule,
-    RestaurantFormComponent,
     RestaurantNameRatingFormComponent,
+    RestaurantCommentFormComponent,
   ],
   template: `
     <p-button
       (click)="showDialog()"
       size="small"
-      icon="pi pi-pencil"
+      icon="pi pi-comment"
       [rounded]="true"
       [text]="true"
     />
@@ -37,7 +36,7 @@ import { RestaurantService } from '../../../data-access/restaurant.service';
       [(visible)]="visible"
       [style]="{ width: '25rem' }"
     >
-      <app-restaurant-name-rating-form [formGroup]="updateRestaurantForm" />
+      <app-restaurant-comment-form [formGroup]="updateCommentForm" />
       <div class="flex justify-content-end gap-2 py-3">
         <p-button
           label="Annuler"
@@ -51,27 +50,23 @@ import { RestaurantService } from '../../../data-access/restaurant.service';
   `,
   styles: ``,
 })
-export class UpdateRestaurantDialogComponent implements OnInit {
+export class UpdateRestaurantCommentDialogComponent {
   visible = signal(false);
   restaurantToUpdate = input<Restaurant>();
   formBuilder = inject(FormBuilder);
   restaurantService = inject(RestaurantService);
-  updateRestaurantForm!: FormGroup;
+  updateCommentForm!: FormGroup;
   cdr = inject(ChangeDetectorRef);
 
   ngOnInit(): void {
-    this.updateRestaurantForm = this.formBuilder.nonNullable.group({
-      name: [
-        this.restaurantToUpdate()?.name,
+    this.updateCommentForm = this.formBuilder.nonNullable.group({
+      comment: [
+        this.restaurantToUpdate()?.comment,
         [
           Validators.required,
           Validators.minLength(3),
           Validators.maxLength(25),
         ],
-      ],
-      rating: [
-        this.restaurantToUpdate()?.rating,
-        [Validators.min(0), Validators.max(5)],
       ],
     });
   }
@@ -88,10 +83,9 @@ export class UpdateRestaurantDialogComponent implements OnInit {
   onSave() {
     this.visible.set(false);
     //next of the update$
-    this.restaurantService.updateNameAndRating$.next({
+    this.restaurantService.updateComment$.next({
       id: this.restaurantToUpdate()?.id,
-      rating: this.updateRestaurantForm.value.rating as unknown as number,
-      name: this.updateRestaurantForm.value.name as string,
+      comment: this.updateCommentForm.value.comment as string,
     });
     //this.updateRestaurantForm.reset();
   }
