@@ -1,7 +1,15 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { AddCategory, Category } from '../interfaces/category';
 import { FIRESTORE } from '../../app.config';
-import { collection, query, orderBy, limit, addDoc } from 'firebase/firestore';
+import {
+  collection,
+  query,
+  orderBy,
+  limit,
+  addDoc,
+  doc,
+  deleteDoc,
+} from 'firebase/firestore';
 import { collectionData } from 'rxfire/firestore';
 import {
   map,
@@ -15,6 +23,7 @@ import {
   of,
 } from 'rxjs';
 import { connect } from 'ngxtension/connect';
+import { RestaurantService } from './restaurant.service';
 
 interface CategoryState {
   categories: Category[];
@@ -26,10 +35,12 @@ interface CategoryState {
 })
 export class CategoryService {
   private firestore = inject(FIRESTORE);
+  restaurantService = inject(RestaurantService);
 
   //sources
   categories$ = this.getCategories();
   add$ = new Subject<AddCategory>();
+  delete$ = this.restaurantService.deleteCategory$;
 
   //state
   private state = signal<CategoryState>({
@@ -50,9 +61,20 @@ export class CategoryService {
         ignoreElements(),
         catchError((error) => of({ error })),
       ),
+      this.delete$.pipe(
+        exhaustMap((id) => this.deleteCategory(id)),
+        ignoreElements(),
+        catchError((error) => of({ error })),
+      ),
     );
 
     connect(this.state).with(nextState$);
+  }
+
+  //delete a category
+  private deleteCategory(categoryId?: string) {
+    const categoryDocRef = doc(this.firestore, `categories/${categoryId}`);
+    return deleteDoc(categoryDocRef);
   }
 
   //get all categories from db

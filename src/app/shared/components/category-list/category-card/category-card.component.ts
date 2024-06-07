@@ -1,36 +1,76 @@
-import { Component, effect, input } from '@angular/core';
+import { Component, effect, inject, input, output } from '@angular/core';
+import { DeleteRestaurant, Restaurant } from '../../../interfaces/restaurant';
+import { Category, DeleteCategory } from '../../../interfaces/category';
+import { ButtonModule } from 'primeng/button';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { UpdateRestaurantCommentDialogComponent } from '../../restaurant-list/update-restaurant-comment-dialog/update-restaurant-comment-dialog.component';
+import { UpdateRestaurantDialogComponent } from '../../restaurant-list/update-restaurant-dialog/update-restaurant-dialog.component';
+import { ConfirmationService } from 'primeng/api';
+import { RouterLink } from '@angular/router';
+import { CategoryService } from '../../../data-access/category.service';
 
 @Component({
   selector: 'app-category-card',
   standalone: true,
-  imports: [],
+  imports: [
+    ButtonModule,
+    ConfirmDialogModule,
+    UpdateRestaurantCommentDialogComponent,
+    UpdateRestaurantDialogComponent,
+    RouterLink,
+  ],
+  providers: [ConfirmationService],
   template: `
     <div
       class="overflow-hidden shadow-md w-[250px] h-[280px] mx-auto sm:px-6 lg:px-8 border-[1px] border-blue-600 rounded"
     >
-      <!-- card header -->
-      <div
-        class="px-6 py-4 bg-white border-b border-gray-200 font-bold uppercase text-center"
-      >
-        {{ categoryName() }}
-      </div>
+      <a [routerLink]="['/category', category().id]">
+        <!-- card header -->
+        <div
+          class="px-6 py-4 bg-white border-b border-gray-200 font-bold uppercase text-center"
+        >
+          {{ category().name }}
+        </div>
 
-      <!-- card body -->
-      <div class="bg-white border-b border-gray-200 h-32 p-2 text-center">
-        <!-- content goes here -->
-        @if (categoryDesc()) {
-          <small>{{ categoryDesc() }}</small>
-        } @else {
-          <small>Aucune description</small>
-        }
-      </div>
-
+        <!-- card body -->
+        <div class="bg-white border-b border-gray-200 h-32 p-2 text-center">
+          <!-- content goes here -->
+          @if (category().description) {
+            <small>{{ category().description }}</small>
+          } @else {
+            <small>Aucune description</small>
+          }
+        </div>
+      </a>
       <!-- card footer -->
       <div
-        class="bg-white border-gray-200 h-[35px] text-right bottom-0 flex justify-center items-center w-full"
+        class="bg-white border-gray-200 h-[70px] text-right bottom-0 flex flex-col justify-center items-center w-full py-2"
       >
         <div class="text-center">
           <small>{{ restaurantCount() }} restaurants ajoutés.</small>
+        </div>
+        <div class="text-center flex flex-col gap-2">
+          <div class="flex justify-center items-center gap-4">
+            <p-button
+              size="small"
+              icon="pi pi-pencil"
+              severity="secondary"
+              [rounded]="true"
+              [text]="true"
+              (click)="console.log('update')"
+            />
+            <div>
+              <p-confirmDialog />
+              <p-button
+                size="small"
+                icon="pi pi-trash"
+                severity="danger"
+                [rounded]="true"
+                [text]="true"
+                (click)="confirmDelete($event)"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -38,9 +78,30 @@ import { Component, effect, input } from '@angular/core';
   styles: ``,
 })
 export class CategoryCardComponent {
-  categoryName = input.required<string>();
-  categoryDesc = input<string>();
+  category = input.required<Category>();
   restaurantCount = input.required<number>();
+  deleteCategory = output<DeleteCategory>();
+  protected readonly console = console;
+  confirmationService = inject(ConfirmationService);
 
   constructor() {}
+
+  confirmDelete(event: Event) {
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: 'Voulez-vous vraiment supprimer cette catégorie ?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: 'pi pi-check mr-2',
+      acceptLabel: 'Oui',
+      rejectIcon: 'pi pi-times mr-2',
+      rejectLabel: 'Non',
+      acceptButtonStyleClass: 'p-button-danger p-button-text',
+      rejectButtonStyleClass: 'p-button-text p-button-text',
+      accept: () => {
+        this.deleteCategory.emit(this.category().id);
+      },
+      reject: () => {},
+    });
+  }
 }

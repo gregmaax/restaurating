@@ -15,8 +15,10 @@ import {
   addDoc,
   updateDoc,
   deleteDoc,
+  getDocs,
   where,
   doc,
+  writeBatch,
 } from 'firebase/firestore';
 import {
   catchError,
@@ -31,6 +33,7 @@ import {
 } from 'rxjs';
 import { connect } from 'ngxtension/connect';
 import { collectionData } from 'rxfire/firestore';
+import { DeleteCategory } from '../interfaces/category';
 
 interface RestaurantState {
   restaurants: Restaurant[];
@@ -49,6 +52,7 @@ export class RestaurantService {
   delete$ = new Subject<DeleteRestaurant>();
   updateNameAndRating$ = new Subject<UpdateRestaurant>();
   updateComment$ = new Subject<UpdateRestaurantComment>();
+  deleteCategory$ = new Subject<DeleteCategory>();
 
   //state
   private state = signal<RestaurantState>({
@@ -85,6 +89,11 @@ export class RestaurantService {
         exhaustMap((updateComment) =>
           this.updateRestaurantComment(updateComment),
         ),
+        ignoreElements(),
+        catchError((error) => of({ error })),
+      ),
+      this.deleteCategory$.pipe(
+        exhaustMap((id) => this.deleteRestaurantsByCategory(id)),
         ignoreElements(),
         catchError((error) => of({ error })),
       ),
@@ -128,6 +137,19 @@ export class RestaurantService {
       rating: restaurant.rating,
       updatedAt: Date.now(),
     });
+  }
+
+  //delete restaurants by categoryId
+  async deleteRestaurantsByCategory(categoryId?: string) {
+    const restaurantsRef = collection(this.firestore, 'restaurants');
+    const q = query(restaurantsRef, where('categoryId', '==', categoryId));
+    const querySnapshot = await getDocs(q);
+
+    const batch = writeBatch(this.firestore);
+    querySnapshot.forEach((doc) => {
+      batch.delete(doc.ref);
+    });
+    await batch.commit();
   }
 
   //delete a restaurant
