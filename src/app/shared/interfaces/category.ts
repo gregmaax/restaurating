@@ -10,3 +10,8 @@ export interface Category {
 export type AddCategory = Omit<Category, 'id' | 'createdAt' | 'userId'>;
 
 export type DeleteCategory = Category['id'];
+
+export type UpdateCategory = Pick<
+  Category,
+  'id' | 'name' | 'description' | 'updatedAt'
+>;

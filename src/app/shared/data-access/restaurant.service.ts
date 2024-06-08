@@ -116,11 +116,11 @@ export class RestaurantService {
 
   //update a restaurant name and rating
   private updateRestaurantComment(restaurant: UpdateRestaurantComment) {
-    const updatedRestaurantComment = doc(
+    const restaurantToUpdate = doc(
       this.firestore,
       `restaurants/${restaurant.id}`,
     );
-    return updateDoc(updatedRestaurantComment, {
+    return updateDoc(restaurantToUpdate, {
       comment: restaurant.comment,
       updatedAt: Date.now(),
     });
@@ -128,11 +128,11 @@ export class RestaurantService {
 
   //update a restaurant name and rating
   private updateRestaurantNameAndRating(restaurant: UpdateRestaurant) {
-    const updatedRestaurantNameAndRating = doc(
+    const restaurantToUpdate = doc(
       this.firestore,
       `restaurants/${restaurant.id}`,
     );
-    return updateDoc(updatedRestaurantNameAndRating, {
+    return updateDoc(restaurantToUpdate, {
       name: restaurant.name,
       rating: restaurant.rating,
       updatedAt: Date.now(),

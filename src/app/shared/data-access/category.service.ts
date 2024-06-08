@@ -1,5 +1,5 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { AddCategory, Category } from '../interfaces/category';
+import { AddCategory, Category, UpdateCategory } from '../interfaces/category';
 import { FIRESTORE } from '../../app.config';
 import {
   collection,
@@ -9,6 +9,7 @@ import {
   addDoc,
   doc,
   deleteDoc,
+  updateDoc,
 } from 'firebase/firestore';
 import { collectionData } from 'rxfire/firestore';
 import {
@@ -41,6 +42,7 @@ export class CategoryService {
   categories$ = this.getCategories();
   add$ = new Subject<AddCategory>();
   delete$ = this.restaurantService.deleteCategory$;
+  update$ = new Subject<UpdateCategory>();
 
   //state
   private state = signal<CategoryState>({
@@ -66,9 +68,24 @@ export class CategoryService {
         ignoreElements(),
         catchError((error) => of({ error })),
       ),
+      this.update$.pipe(
+        exhaustMap((updateCategory) => this.updateCategory(updateCategory)),
+        ignoreElements(),
+        catchError((error) => of({ error })),
+      ),
     );
 
     connect(this.state).with(nextState$);
+  }
+
+  //update a category
+  private updateCategory(category: UpdateCategory) {
+    const categoryToUpdate = doc(this.firestore, `categories/${category.id}`);
+    return updateDoc(categoryToUpdate, {
+      name: category.name,
+      description: category.description,
+      updatedAt: Date.now(),
+    });
   }
 
   //delete a category

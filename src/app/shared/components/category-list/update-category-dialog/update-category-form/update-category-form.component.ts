@@ -1,19 +1,16 @@
 import { Component, Input } from '@angular/core';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
-import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
 import { NgClass } from '@angular/common';
 
 @Component({
-  selector: 'app-category-form',
+  selector: 'app-update-category-form',
   standalone: true,
   imports: [
+    FormsModule,
     InputTextModule,
-    FloatLabelModule,
     InputTextareaModule,
-    ButtonModule,
     ReactiveFormsModule,
     NgClass,
   ],
@@ -23,7 +20,9 @@ import { NgClass } from '@angular/common';
         <label
           [ngClass]="{
             'text-red-600':
-              formGroup.invalid && formGroup.controls['name'].errors
+              formGroup.invalid &&
+              formGroup.controls['name'].touched &&
+              formGroup.controls['name'].errors
           }"
           for="category-name"
           >Nom</label
@@ -34,10 +33,16 @@ import { NgClass } from '@angular/common';
           formControlName="name"
           [ngClass]="{
             'ng-invalid ng-dirty':
-              formGroup.invalid && formGroup.controls['name'].errors
+              formGroup.invalid &&
+              formGroup.controls['name'].touched &&
+              formGroup.controls['name'].errors
           }"
         />
-        @if (formGroup.invalid && formGroup.controls['name'].errors) {
+        @if (
+          formGroup.invalid &&
+          formGroup.controls['name'].touched &&
+          formGroup.controls['name'].errors
+        ) {
           <small class="text-red-600 text-xs ml-2">
             Le titre doit contenir entre 3 et 25 caractères...
           </small>
@@ -58,6 +63,6 @@ import { NgClass } from '@angular/common';
   `,
   styles: ``,
 })
-export class CategoryFormComponent {
+export class UpdateCategoryFormComponent {
   @Input() formGroup!: FormGroup;
 }

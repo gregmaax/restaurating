@@ -1,27 +1,22 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  inject,
-  input,
-  OnInit,
-  signal,
-} from '@angular/core';
+import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
-import { RestaurantFormComponent } from '../../restaurant-form/restaurant-form.component';
-import { RestaurantNameRatingFormComponent } from './restaurant-name-rating-form/restaurant-name-rating-form.component';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { RestaurantNameRatingFormComponent } from '../../restaurant-list/update-restaurant-dialog/restaurant-name-rating-form/restaurant-name-rating-form.component';
 import { Restaurant } from '../../../interfaces/restaurant';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RestaurantService } from '../../../data-access/restaurant.service';
+import { CategoryService } from '../../../data-access/category.service';
+import { UpdateCategoryFormComponent } from './update-category-form/update-category-form.component';
+import { Category } from '../../../interfaces/category';
 
 @Component({
-  selector: 'app-update-restaurant-dialog',
+  selector: 'app-update-category-dialog',
   standalone: true,
   imports: [
     ButtonModule,
     DialogModule,
-    RestaurantFormComponent,
     RestaurantNameRatingFormComponent,
+    UpdateCategoryFormComponent,
   ],
   template: `
     <p-button
@@ -37,7 +32,7 @@ import { RestaurantService } from '../../../data-access/restaurant.service';
       [(visible)]="visible"
       [style]="{ width: '25rem' }"
     >
-      <app-restaurant-name-rating-form [formGroup]="updateRestaurantForm" />
+      <app-update-category-form [formGroup]="updateCategoryForm" />
       <div class="flex justify-content-end gap-2 py-3">
         <p-button
           label="Annuler"
@@ -51,27 +46,24 @@ import { RestaurantService } from '../../../data-access/restaurant.service';
   `,
   styles: ``,
 })
-export class UpdateRestaurantDialogComponent implements OnInit {
+export class UpdateCategoryDialogComponent implements OnInit {
   visible = signal(false);
-  restaurantToUpdate = input<Restaurant>();
+  categoryToUpdate = input<Category>();
+  categoryService = inject(CategoryService);
   formBuilder = inject(FormBuilder);
-  restaurantService = inject(RestaurantService);
-  updateRestaurantForm!: FormGroup;
+  updateCategoryForm!: FormGroup;
 
   ngOnInit(): void {
-    this.updateRestaurantForm = this.formBuilder.nonNullable.group({
+    this.updateCategoryForm = this.formBuilder.nonNullable.group({
       name: [
-        this.restaurantToUpdate()?.name,
+        this.categoryToUpdate()?.name,
         [
           Validators.required,
           Validators.minLength(3),
           Validators.maxLength(25),
         ],
       ],
-      rating: [
-        this.restaurantToUpdate()?.rating,
-        [Validators.min(0), Validators.max(5)],
-      ],
+      description: [this.categoryToUpdate()?.description],
     });
   }
 
@@ -86,10 +78,10 @@ export class UpdateRestaurantDialogComponent implements OnInit {
   onSave() {
     this.visible.set(false);
     //next of the update$
-    this.restaurantService.updateNameAndRating$.next({
-      id: this.restaurantToUpdate()?.id,
-      rating: this.updateRestaurantForm.value.rating as unknown as number,
-      name: this.updateRestaurantForm.value.name as string,
+    this.categoryService.update$.next({
+      id: this.categoryToUpdate()?.id,
+      name: this.updateCategoryForm.value.name as string,
+      description: this.updateCategoryForm.value.description as string,
     });
     //this.updateRestaurantForm.reset();
   }

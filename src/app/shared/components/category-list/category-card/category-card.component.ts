@@ -5,9 +5,9 @@ import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { UpdateRestaurantCommentDialogComponent } from '../../restaurant-list/update-restaurant-comment-dialog/update-restaurant-comment-dialog.component';
 import { UpdateRestaurantDialogComponent } from '../../restaurant-list/update-restaurant-dialog/update-restaurant-dialog.component';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { RouterLink } from '@angular/router';
-import { CategoryService } from '../../../data-access/category.service';
+import { UpdateCategoryDialogComponent } from '../update-category-dialog/update-category-dialog.component';
 
 @Component({
   selector: 'app-category-card',
@@ -18,16 +18,17 @@ import { CategoryService } from '../../../data-access/category.service';
     UpdateRestaurantCommentDialogComponent,
     UpdateRestaurantDialogComponent,
     RouterLink,
+    UpdateCategoryDialogComponent,
   ],
-  providers: [ConfirmationService],
+  providers: [ConfirmationService, MessageService],
   template: `
     <div
-      class="overflow-hidden shadow-md w-[250px] h-[280px] mx-auto sm:px-6 lg:px-8 border-[1px] border-blue-600 rounded"
+      class="overflow-hidden shadow-md w-[250px] h-[300px] mx-auto sm:px-6 lg:px-8 border-[1px] border-blue-600 rounded"
     >
       <a [routerLink]="['/category', category().id]">
         <!-- card header -->
         <div
-          class="px-6 py-4 bg-white border-b border-gray-200 font-bold uppercase text-center"
+          class="h-[90px] px-4 py-4 bg-white border-b border-gray-200 font-bold uppercase flex justify-center items-center text-center"
         >
           {{ category().name }}
         </div>
@@ -51,14 +52,7 @@ import { CategoryService } from '../../../data-access/category.service';
         </div>
         <div class="text-center flex flex-col gap-2">
           <div class="flex justify-center items-center gap-4">
-            <p-button
-              size="small"
-              icon="pi pi-pencil"
-              severity="secondary"
-              [rounded]="true"
-              [text]="true"
-              (click)="console.log('update')"
-            />
+            <app-update-category-dialog [categoryToUpdate]="category()" />
             <div>
               <p-confirmDialog />
               <p-button
