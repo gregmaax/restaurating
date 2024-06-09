@@ -10,6 +10,7 @@ import {
   doc,
   deleteDoc,
   updateDoc,
+  where,
 } from 'firebase/firestore';
 import { collectionData } from 'rxfire/firestore';
 import {
@@ -25,6 +26,7 @@ import {
 } from 'rxjs';
 import { connect } from 'ngxtension/connect';
 import { RestaurantService } from './restaurant.service';
+import { AuthService } from './auth.service';
 
 interface CategoryState {
   categories: Category[];
@@ -37,6 +39,7 @@ interface CategoryState {
 export class CategoryService {
   private firestore = inject(FIRESTORE);
   restaurantService = inject(RestaurantService);
+  authService = inject(AuthService);
 
   //sources
   categories$ = this.getCategories();
@@ -99,6 +102,7 @@ export class CategoryService {
     const categoriesCollection = query(
       collection(this.firestore, 'categories'),
       orderBy('createdAt', 'desc'),
+      where('userId', '==', this.authService.user()?.uid),
       //limit(50)
     );
 
@@ -112,7 +116,7 @@ export class CategoryService {
     const newCategory: Category = {
       name: category.name,
       description: category.description,
-      userId: 'user1',
+      userId: this.authService.user()?.uid as string,
       createdAt: Date.now(),
     };
 

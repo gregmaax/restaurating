@@ -34,6 +34,7 @@ import {
 import { connect } from 'ngxtension/connect';
 import { collectionData } from 'rxfire/firestore';
 import { DeleteCategory } from '../interfaces/category';
+import { AuthService } from './auth.service';
 
 interface RestaurantState {
   restaurants: Restaurant[];
@@ -45,6 +46,7 @@ interface RestaurantState {
 })
 export class RestaurantService {
   private firestore = inject(FIRESTORE);
+  authService = inject(AuthService);
 
   //sources
   restaurants$ = this.getRestaurants();
@@ -174,6 +176,7 @@ export class RestaurantService {
     const restaurantsCollection = query(
       collection(this.firestore, 'restaurants'),
       orderBy('createdAt', 'desc'),
+      where('userId', '==', this.authService.user()?.uid),
       //limit(50)
     );
 
@@ -191,7 +194,7 @@ export class RestaurantService {
       city: restaurant.city,
       createdAt: Date.now(),
       address: 'default',
-      userId: 'user1',
+      userId: this.authService.user()?.uid as string,
       categoryId: restaurant.categoryId,
     };
 
