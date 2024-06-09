@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuItem } from 'primeng/api';
 import { UserBadgeComponent } from './user-badge/user-badge.component';
+import { AuthService } from '../../data-access/auth.service';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MenubarModule, UserBadgeComponent],
+  imports: [MenubarModule, UserBadgeComponent, ButtonModule],
   template: `
     <header class="flex justify-between px-6 border-b-[1px] border-blue-700">
       <div class="flex items-center justify-center">
@@ -17,7 +19,7 @@ import { UserBadgeComponent } from './user-badge/user-badge.component';
       <div class="flex items-center justify-center">
         <p-menubar [model]="items" [styleClass]="'border-none'">
           <ng-template pTemplate="item" let-item>
-            <a [href]="item.url" class="p-menuitem-link">
+            <a [routerLink]="item.url" class="p-menuitem-link">
               <span [class]="item.icon"></span>
               <span class="ml-2">{{ item.label }}</span>
             </a>
@@ -25,14 +27,27 @@ import { UserBadgeComponent } from './user-badge/user-badge.component';
         </p-menubar>
       </div>
       <div class="flex items-center justify-center gap-2">
-        <app-user-badge [username]="usermane" />
-        <span class="pi pi-sign-out"></span>
+        @if (authService.user()) {
+          <app-user-badge [activeUser]="authService.user()" />
+          <p-button
+            size="small"
+            icon="pi pi-sign-out"
+            severity="danger"
+            [rounded]="true"
+            [text]="true"
+            (click)="authService.logout()"
+          />
+        } @else {
+          <span>Connexion</span>
+        }
       </div>
     </header>
   `,
   styles: ``,
 })
 export class HeaderComponent {
+  authService = inject(AuthService);
+
   items: MenuItem[] = [
     {
       label: 'Accueil',
@@ -50,5 +65,4 @@ export class HeaderComponent {
       url: '/rankings',
     },
   ];
-  usermane = 'Justine';
 }

@@ -1,5 +1,6 @@
 import { Component, input } from '@angular/core';
 import { AvatarModule } from 'primeng/avatar';
+import { AuthUser } from '../../../data-access/auth.service';
 
 @Component({
   selector: 'app-user-badge',
@@ -8,19 +9,22 @@ import { AvatarModule } from 'primeng/avatar';
   template: `
     <div class="flex items-center gap-2">
       <p-avatar
-        [label]="getFirstLetter(username())"
+        [label]="getFirstLetter(activeUser()?.email)"
         [style]="{ 'background-color': '#dee9fc', color: '#1a2551' }"
         shape="circle"
       />
-      <span>{{ username() }}</span>
+      <span>{{ activeUser()?.email }}</span>
     </div>
   `,
   styles: ``,
 })
 export class UserBadgeComponent {
-  username = input.required<string>();
+  activeUser = input.required<AuthUser>();
 
-  getFirstLetter(str: string): string {
-    return str.length > 0 ? str.charAt(0) : '';
+  getFirstLetter(str?: string | null) {
+    if (str) {
+      return str.length > 0 ? str.charAt(0).toUpperCase() : '';
+    }
+    return '';
   }
 }
