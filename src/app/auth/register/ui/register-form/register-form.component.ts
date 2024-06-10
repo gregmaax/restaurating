@@ -39,7 +39,7 @@ import { ButtonModule } from 'primeng/button';
         <small>Entrez un email valide.</small>
       }
     </div>
-    <div class="flex flex-col gap-1">
+    <div class="flex flex-col gap-1 mt-2">
       <label for="password">Mot de passe</label>
       <p-password
         [toggleMask]="true"
@@ -47,6 +47,9 @@ import { ButtonModule } from 'primeng/button';
         aria-describedby="password-help"
         formControlName="password"
         promptLabel="Entrez un mot de passe"
+        weakLabel="Faible"
+        mediumLabel="Moyen"
+        strongLabel="Fort"
       />
       @if (
         (registerForm.controls.email.dirty || form.submitted) &&
@@ -55,14 +58,13 @@ import { ButtonModule } from 'primeng/button';
         <small>Le mot de passe doit contenir 8 caractères minimum.</small>
       }
     </div>
-    <div class="flex flex-col gap-1">
+    <div class="flex flex-col gap-1 mt-2">
       <label for="confirm-password">Confirmer mot de passe</label>
       <p-password
         [toggleMask]="true"
         id="confirm-password"
         aria-describedby="confirm-password-help"
         formControlName="confirmPassword"
-        promptLabel="Entrez un mot de passe"
       />
       @if (
         (registerForm.controls.email.dirty || form.submitted) &&
