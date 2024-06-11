@@ -16,11 +16,12 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     ProgressSpinnerModule,
   ],
   template: `
-    <div class="container mx-auto mt-6 bg-blue-300 w-1/3 p-2">
+    <div class="container mx-auto mt-6 bg-blue-300 w-1/3 p-2 rounded-xl">
       @if (authService.user() === null) {
         <app-sign-in-form
           [signInStatus]="signInService.status()"
           (signIn)="signInService.signIn$.next($event)"
+          (googleSignIn)="signInService.googleSignIn$.next($event)"
         />
         <div class="mt-3 px-2 flex flex-row gap-2 justify-center items-center">
           <div>

@@ -24,7 +24,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
       #form="ngForm"
       class="px-2"
     >
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col gap-1">
         <label for="email">Email</label>
         <input
           pInputText
@@ -33,7 +33,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
           formControlName="email"
         />
       </div>
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col gap-1 mt-2">
         <label for="password">Mot de passe</label>
         <p-password
           [toggleMask]="true"
@@ -41,6 +41,9 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
           aria-describedby="password-help"
           formControlName="password"
           promptLabel="Entrez un mot de passe"
+          weakLabel="Faible"
+          mediumLabel="Moyen"
+          strongLabel="Fort"
         />
       </div>
 
@@ -51,10 +54,17 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
         <p-progressSpinner ariaLabel="loading" styleClass="w-4rem h-4rem" />
       }
 
-      <div class="mt-3">
+      <div class="mt-3 flex flex-row gap-2">
         <p-button
           label="Se connecter"
           type="submit"
+          [disabled]="signInStatus() === 'authenticating'"
+          size="small"
+        />
+        <p-button
+          label="Google"
+          icon="pi pi-google"
+          (onClick)="googleSignIn.emit()"
           [disabled]="signInStatus() === 'authenticating'"
           size="small"
         />
@@ -66,6 +76,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 export class SignInFormComponent {
   signInStatus = input.required<SignInStatus>();
   signIn = output<Credentials>();
+  googleSignIn = output();
 
   private fb = inject(FormBuilder);
 

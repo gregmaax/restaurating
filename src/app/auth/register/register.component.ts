@@ -9,7 +9,7 @@ import { RegisterFormComponent } from './ui/register-form/register-form.componen
   standalone: true,
   imports: [RegisterFormComponent],
   template: `
-    <div class="container mx-auto mt-6 bg-blue-300 w-1/3 p-2">
+    <div class="container mx-auto mt-6 bg-blue-300 w-1/3 p-2 rounded-xl">
       <app-register-form
         (register)="registerService.createUser$.next($event)"
         [status]="registerService.status()"
