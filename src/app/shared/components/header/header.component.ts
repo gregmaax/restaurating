@@ -10,14 +10,16 @@ import { ButtonModule } from 'primeng/button';
   standalone: true,
   imports: [MenubarModule, UserBadgeComponent, ButtonModule],
   template: `
-    <header class="flex justify-between px-6 border-b-[1px] border-blue-700">
+    <header
+      class="container mx-auto flex justify-between px-6 border-b-[1px] border-zinc-600"
+    >
       <div class="flex items-center justify-center">
         <span class="self-center font-semibold whitespace-nowrap"
           >RESTAURATING</span
         >
       </div>
-      <div class="flex items-center justify-center">
-        <p-menubar [model]="items" [styleClass]="'border-none'">
+      <div class="flex items-center justify-center ">
+        <p-menubar [model]="items" [styleClass]="'border-none bg-neutral-200'">
           <ng-template pTemplate="item" let-item>
             <a [routerLink]="item.url" class="p-menuitem-link">
               <span [class]="item.icon"></span>

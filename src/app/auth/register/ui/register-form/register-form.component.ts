@@ -80,8 +80,9 @@ import { ButtonModule } from 'primeng/button';
       <p-progressSpinner ariaLabel="loading" styleClass="w-4rem h-4rem" />
     }
 
-    <div class="mt-3">
+    <div class="mt-5">
       <p-button
+        styleClass="bg-sky-500 outline-none"
         label="Créer mon compte"
         type="submit"
         [disabled]="status() === 'creating'"
