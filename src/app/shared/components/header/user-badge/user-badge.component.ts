@@ -9,11 +9,21 @@ import { AuthUser } from '../../../data-access/auth.service';
   template: `
     <div class="flex items-center gap-2">
       <p-avatar
-        [label]="getFirstLetter(activeUser()?.email)"
+        [label]="
+          getFirstLetter(
+            activeUser()?.displayName
+              ? activeUser()?.displayName
+              : activeUser()?.email
+          )
+        "
         [style]="{ 'background-color': '#dee9fc', color: '#1a2551' }"
         shape="circle"
       />
-      <span>{{ activeUser()?.email }}</span>
+      <span>{{
+        activeUser()?.displayName
+          ? activeUser()?.displayName
+          : activeUser()?.email
+      }}</span>
     </div>
   `,
   styles: ``,

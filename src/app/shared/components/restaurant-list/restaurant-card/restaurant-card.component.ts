@@ -26,17 +26,17 @@ import { UpdateRestaurantCommentDialogComponent } from '../update-restaurant-com
   providers: [ConfirmationService, MessageService],
   template: `
     <div
-      class="overflow-hidden shadow-md w-[250px] h-[300px] mx-auto sm:px-6 lg:px-8 border-[1px] border-blue-600 rounded"
+      class="container overflow-hidden shadow-xl w-[250px] h-[300px] mx-auto px-6 border-[1px] bg-zinc-300 rounded-xl"
     >
       <!-- card header -->
       <div
-        class="h-[90px] px-4 py-4 bg-white border-b border-gray-200 font-bold uppercase flex justify-center items-center text-center"
+        class="h-[90px] px-4 py-4 border-b border-zinc-600 font-bold uppercase flex justify-center items-center text-center"
       >
         {{ restaurant().name }}
       </div>
 
       <!-- card body -->
-      <div class="bg-white border-b border-gray-200 h-32 p-10 text-center">
+      <div class="border-b border-zinc-600 h-32 p-10 text-center">
         <!-- content goes here -->
         @if (restaurant().rating) {
           <div class="card flex justify-center items-center">
@@ -53,7 +53,7 @@ import { UpdateRestaurantCommentDialogComponent } from '../update-restaurant-com
 
       <!-- card footer -->
       <div
-        class="bg-white border-gray-200 h-[70px] text-right bottom-0 flex justify-center items-center w-full py-2"
+        class="border-zinc-600 h-[70px] text-right bottom-0 flex justify-center items-center w-full py-2"
       >
         <div class="text-center flex flex-col gap-2">
           <div class="flex justify-center items-center gap-4">

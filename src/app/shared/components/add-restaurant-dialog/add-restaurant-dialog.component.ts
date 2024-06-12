@@ -21,6 +21,7 @@ import { CategoryService } from '../../data-access/category.service';
   template: `
     <p-button
       (click)="showDialog()"
+      styleClass="bg-sky-500 outline-none text-white"
       label="Ajouter un restaurant"
       size="small"
       severity="secondary"

@@ -8,7 +8,7 @@ import { CategoryService } from '../shared/data-access/category.service';
   standalone: true,
   imports: [AddCategoryDialogComponent, CategoryListComponent],
   template: `
-    <div class="m-12 flex flex-col gap-6">
+    <div class="container w-full mx-auto my-12 flex flex-col gap-6">
       <app-add-category-dialog />
       <app-category-list [categories]="categoryService.categories()" />
     </div>

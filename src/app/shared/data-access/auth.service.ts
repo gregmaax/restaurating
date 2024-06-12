@@ -7,6 +7,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  signInWithPopup,
+  GoogleAuthProvider,
   User,
 } from 'firebase/auth';
 import { Credentials } from '../interfaces/credentials';
@@ -69,5 +71,10 @@ export class AuthService {
         ),
       ),
     );
+  }
+
+  signInWithGoogle() {
+    const provider = new GoogleAuthProvider();
+    return from(defer(() => signInWithPopup(this.auth, provider)));
   }
 }

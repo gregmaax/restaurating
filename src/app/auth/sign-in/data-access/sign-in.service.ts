@@ -19,14 +19,27 @@ export class SignInService {
   // sources
   error$ = new Subject<any>();
   signIn$ = new Subject<Credentials>();
+  googleSignIn$ = new Subject();
 
-  userAuthenticated$ = this.signIn$.pipe(
-    switchMap((credentials) =>
-      this.authService.login(credentials).pipe(
-        catchError((err) => {
-          this.error$.next(err);
-          return EMPTY;
-        }),
+  userAuthenticated$ = merge(
+    this.signIn$.pipe(
+      switchMap((credentials) =>
+        this.authService.login(credentials).pipe(
+          catchError((err) => {
+            this.error$.next(err);
+            return EMPTY;
+          }),
+        ),
+      ),
+    ),
+    this.googleSignIn$.pipe(
+      switchMap(() =>
+        this.authService.signInWithGoogle().pipe(
+          catchError((err) => {
+            this.error$.next(err);
+            return EMPTY;
+          }),
+        ),
       ),
     ),
   );
@@ -44,6 +57,9 @@ export class SignInService {
     const nextState$ = merge(
       this.userAuthenticated$.pipe(map(() => ({ status: 'success' as const }))),
       this.signIn$.pipe(map(() => ({ status: 'authenticating' as const }))),
+      this.googleSignIn$.pipe(
+        map(() => ({ status: 'authenticating' as const })),
+      ),
       this.error$.pipe(map(() => ({ status: 'error' as const }))),
     );
 

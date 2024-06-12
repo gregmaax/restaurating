@@ -24,9 +24,10 @@ import { RippleModule } from 'primeng/ripple';
   template: `
     <p-button
       (click)="showDialog()"
+      styleClass="bg-sky-500 outline-none text-white"
       label="Ajouter une catégorie"
       size="small"
-      class="p-3"
+      severity="secondary"
     />
     <p-toast position="bottom-center" key="bc" />
     <p-dialog

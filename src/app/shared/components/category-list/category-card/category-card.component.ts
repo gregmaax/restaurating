@@ -23,18 +23,18 @@ import { UpdateCategoryDialogComponent } from '../update-category-dialog/update-
   providers: [ConfirmationService, MessageService],
   template: `
     <div
-      class="overflow-hidden shadow-md w-[250px] h-[300px] mx-auto sm:px-6 lg:px-8 border-[1px] border-blue-600 rounded"
+      class="container overflow-hidden shadow-xl w-[250px] h-[300px] mx-auto px-6 border-[1px] bg-zinc-300 rounded-xl"
     >
       <a [routerLink]="['/category', category().id]">
         <!-- card header -->
         <div
-          class="h-[90px] px-4 py-4 bg-white border-b border-gray-200 font-bold uppercase flex justify-center items-center text-center"
+          class="h-[90px] px-4 py-4 border-b border-zinc-600 font-bold uppercase flex justify-center items-center text-center"
         >
           {{ category().name }}
         </div>
 
         <!-- card body -->
-        <div class="bg-white border-b border-gray-200 h-32 p-2 text-center">
+        <div class="border-b border-zinc-600 h-32 p-2 text-center">
           <!-- content goes here -->
           @if (category().description) {
             <small>{{ category().description }}</small>
@@ -45,7 +45,7 @@ import { UpdateCategoryDialogComponent } from '../update-category-dialog/update-
       </a>
       <!-- card footer -->
       <div
-        class="bg-white border-gray-200 h-[70px] text-right bottom-0 flex flex-col justify-center items-center w-full py-2"
+        class="border-zinc-600 h-[70px] text-right bottom-0 flex flex-col justify-center items-center w-full py-2"
       >
         <div class="text-center">
           <small>{{ restaurantCount() }} restaurants ajoutés.</small>
@@ -75,7 +75,6 @@ export class CategoryCardComponent {
   category = input.required<Category>();
   restaurantCount = input.required<number>();
   deleteCategory = output<DeleteCategory>();
-  protected readonly console = console;
   confirmationService = inject(ConfirmationService);
 
   constructor() {}

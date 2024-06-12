@@ -11,7 +11,9 @@ import { RestaurantListComponent } from '../shared/components/restaurant-list/re
     AddCategoryDialogComponent,
     RestaurantListComponent,
   ],
-  template: `<div class="m-12 flex flex-col gap-6">Page d'accueil</div>`,
+  template: `<div class="container w-full mx-auto my-12 flex flex-col gap-6">
+    Page d'accueil
+  </div>`,
   styles: ``,
 })
 export default class HomeComponent {}

@@ -16,23 +16,25 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     ProgressSpinnerModule,
   ],
   template: `
-    <div class="container mx-auto mt-6 bg-blue-300 w-1/3 p-2">
-      @if (authService.user() === null) {
-        <app-sign-in-form
-          [signInStatus]="signInService.status()"
-          (signIn)="signInService.signIn$.next($event)"
-        />
-        <div class="mt-3 px-2 flex flex-row gap-2 justify-center items-center">
-          <div>
-            <small>Pas encore de compte ?</small>
-          </div>
-          <a routerLink="/auth/register" class="font-semibold">
-            <small>Créer un compte</small>
-          </a>
+    <div
+      class="container mx-auto mt-6 bg-zinc-300 shadow-xl w-1/3 p-2 rounded-xl"
+    >
+      <div class="mb-4 py-4 px-2 border-b border-zinc-600">
+        <span class="font-bold text-3xl">Se connecter</span>
+      </div>
+      <app-sign-in-form
+        [signInStatus]="signInService.status()"
+        (signIn)="signInService.signIn$.next($event)"
+        (googleSignIn)="signInService.googleSignIn$.next($event)"
+      />
+      <div class="mt-5 px-2 flex flex-row gap-2 justify-center items-center">
+        <div>
+          <small>Pas encore de compte ?</small>
         </div>
-      } @else {
-        <p-progressSpinner ariaLabel="loading" styleClass="w-4rem h-4rem" />
-      }
+        <a routerLink="/auth/register" class="font-semibold">
+          <small>Créer un compte</small>
+        </a>
+      </div>
     </div>
   `,
   styles: ``,
