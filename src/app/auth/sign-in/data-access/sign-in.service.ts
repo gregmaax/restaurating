@@ -1,7 +1,7 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { catchError, EMPTY, map, merge, Subject, switchMap } from 'rxjs';
 import { AuthService } from '../../../shared/data-access/auth.service';
-import { Credentials } from '../../../shared/interfaces/credentials';
+import { SignInCredentials } from '../../../shared/interfaces/credentials';
 import { connect } from 'ngxtension/connect';
 
 export type SignInStatus = 'pending' | 'authenticating' | 'success' | 'error';
@@ -18,7 +18,7 @@ export class SignInService {
 
   // sources
   error$ = new Subject<any>();
-  signIn$ = new Subject<Credentials>();
+  signIn$ = new Subject<SignInCredentials>();
   googleSignIn$ = new Subject();
 
   userAuthenticated$ = merge(

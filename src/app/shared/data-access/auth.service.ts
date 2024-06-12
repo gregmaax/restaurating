@@ -1,17 +1,18 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { AUTH } from '../../app.config';
 import { authState } from 'rxfire/auth';
-import { merge, map, defer, from } from 'rxjs';
+import { merge, map, defer, from, switchMap } from 'rxjs';
 import { connect } from 'ngxtension/connect';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
   signInWithPopup,
+  updateProfile,
   GoogleAuthProvider,
   User,
 } from 'firebase/auth';
-import { Credentials } from '../interfaces/credentials';
+import { Credentials, SignInCredentials } from '../interfaces/credentials';
 import { Router } from '@angular/router';
 
 export type AuthUser = User | null | undefined;
@@ -44,7 +45,7 @@ export class AuthService {
     connect(this.state).with(nextState$);
   }
 
-  login(credentials: Credentials) {
+  login(credentials: SignInCredentials) {
     return from(
       defer(() =>
         signInWithEmailAndPassword(
@@ -68,6 +69,16 @@ export class AuthService {
           this.auth,
           credentials.email,
           credentials.password,
+        ),
+      ),
+    ).pipe(
+      switchMap((result) =>
+        from(
+          updateProfile(result.user, { displayName: credentials.displayName }),
+        ).pipe(
+          map(() => {
+            return result;
+          }),
         ),
       ),
     );
