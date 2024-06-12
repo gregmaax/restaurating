@@ -17,8 +17,13 @@ export const routes: Routes = [
     loadComponent: () => import('./categories/categories.component'),
   },
   {
-    path: 'category/:id',
+    path: 'categories/:id',
     loadComponent: () => import('./category-detail/category-detail.component'),
+  },
+  {
+    path: 'restaurants',
+    canActivate: [isAuthenticatedGuard()],
+    loadComponent: () => import('./restaurants/restaurants.component'),
   },
   {
     path: '',

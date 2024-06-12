@@ -25,7 +25,7 @@ import { UpdateCategoryDialogComponent } from '../update-category-dialog/update-
     <div
       class="container overflow-hidden shadow-xl w-[250px] h-[300px] mx-auto px-6 border-[1px] bg-zinc-300 rounded-xl"
     >
-      <a [routerLink]="['/category', category().id]">
+      <a [routerLink]="['/categories', category().id]">
         <!-- card header -->
         <div
           class="h-[90px] px-4 py-4 border-b border-zinc-600 font-bold uppercase flex justify-center items-center text-center"
