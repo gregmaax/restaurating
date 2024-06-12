@@ -17,12 +17,10 @@ import { AddRestaurantDialogComponent } from '../shared/components/add-restauran
     AddRestaurantDialogComponent,
   ],
   template: `
-    <div class="m-12 flex flex-col gap-6">
-      <div class="flex flex-col gap-10">
-        <div class="flex flex-row gap-2">
-          <p-button label="Retour" size="small" (onClick)="location.back()" />
-          <app-add-restaurant-dialog />
-        </div>
+    <div class="container w-full mx-auto my-12 flex flex-col gap-6">
+      <div class="flex flex-row gap-2">
+        <p-button label="Retour" size="small" (onClick)="location.back()" />
+        <app-add-restaurant-dialog />
       </div>
       @if (
         restaurantService.getRestaurantsByCategory(category()?.id).length > 0

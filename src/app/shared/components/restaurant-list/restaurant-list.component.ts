@@ -11,7 +11,7 @@ import { ToastModule } from 'primeng/toast';
   imports: [TableModule, RestaurantCardComponent, ToastModule],
   providers: [],
   template: `
-    <div class="flex flex-row flex-wrap gap-4 p-3">
+    <div class="container mx-auto flex flex-row flex-wrap gap-4">
       @for (restaurant of restaurants(); track restaurant.id) {
         <a>
           <app-restaurant-card

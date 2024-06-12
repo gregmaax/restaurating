@@ -15,7 +15,7 @@ import { ConfirmationService } from 'primeng/api';
   imports: [CardModule, ButtonModule, CategoryCardComponent, RouterLink],
   providers: [ConfirmationService],
   template: `
-    <div class="flex flex-row flex-wrap gap-4 p-3">
+    <div class="container mx-auto flex flex-row flex-wrap gap-4">
       @for (category of categories(); track category.id) {
         <app-category-card
           [category]="category"
