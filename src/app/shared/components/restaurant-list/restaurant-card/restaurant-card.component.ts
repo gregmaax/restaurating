@@ -46,20 +46,31 @@ import { UpdateRestaurantCommentDialogComponent } from '../update-restaurant-com
       </div>
 
       <!-- card body -->
-      <div class="border-b border-zinc-600 h-32 p-10 text-center">
+      <div
+        class="flex flex-col gap-3 border-b border-zinc-600 h-32 p-5 text-center"
+      >
         <!-- content goes here -->
-        @if (restaurant().rating) {
-          <div class="card flex justify-center items-center">
-            <p-rating
-              [(ngModel)]="restaurant().rating"
-              [readonly]="true"
-              [cancel]="false"
-              [iconOnStyle]="{ color: '#4743fb' }"
-            />
-          </div>
-        } @else {
-          <small>Aucune note</small>
-        }
+        <div>
+          @if (restaurant().rating) {
+            <div class="card flex justify-center items-center">
+              <p-rating
+                [(ngModel)]="restaurant().rating"
+                [readonly]="true"
+                [cancel]="false"
+                [iconOnStyle]="{ color: '#4743fb' }"
+              />
+            </div>
+          } @else {
+            <small>Aucune note</small>
+          }
+        </div>
+        <div>
+          @if (restaurant().comment) {
+            <small>{{ restaurant().comment }}</small>
+          } @else {
+            <small>Aucun commentaire pour le moment.</small>
+          }
+        </div>
       </div>
 
       <!-- card footer -->

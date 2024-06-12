@@ -24,10 +24,10 @@ import { RippleModule } from 'primeng/ripple';
   template: `
     <p-button
       (click)="showDialog()"
-      styleClass="bg-sky-500 outline-none text-white"
       label="Ajouter une catégorie"
       size="small"
       severity="secondary"
+      [raised]="true"
     />
     <p-toast position="bottom-center" key="bc" />
     <p-dialog
@@ -40,16 +40,18 @@ import { RippleModule } from 'primeng/ripple';
       <div class="flex justify-content-end gap-2 py-3">
         <p-button
           label="Annuler"
-          severity="danger"
+          severity="contrast"
           (click)="onCancel()"
           size="small"
+          [raised]="true"
         />
         <p-button
           label="Ajouter"
-          pRipple
           (click)="onSave()"
           size="small"
+          severity="secondary"
           [disabled]="categoryForm.invalid"
+          [raised]="true"
         />
       </div>
     </p-dialog>

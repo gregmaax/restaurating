@@ -21,10 +21,10 @@ import { CategoryService } from '../../data-access/category.service';
   template: `
     <p-button
       (click)="showDialog()"
-      styleClass="bg-sky-500 outline-none text-white"
       label="Ajouter un restaurant"
       size="small"
       severity="secondary"
+      [raised]="true"
     />
     <p-dialog
       header="Nouveau restaurant"
@@ -36,15 +36,18 @@ import { CategoryService } from '../../data-access/category.service';
       <div class="flex justify-content-end gap-2 py-3">
         <p-button
           label="Annuler"
-          severity="danger"
+          severity="contrast"
           (click)="onCancel()"
           size="small"
+          [raised]="true"
         />
         <p-button
           label="Ajouter"
           (click)="onSave()"
           size="small"
+          severity="secondary"
           [disabled]="restaurantForm.invalid"
+          [raised]="true"
         />
       </div>
     </p-dialog>

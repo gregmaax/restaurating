@@ -19,7 +19,13 @@ import { AddRestaurantDialogComponent } from '../shared/components/add-restauran
   template: `
     <div class="container w-full mx-auto my-12 flex flex-col gap-6">
       <div class="flex flex-row gap-2">
-        <p-button label="Retour" size="small" (onClick)="location.back()" />
+        <p-button
+          severity="contrast"
+          label="Retour"
+          size="small"
+          (onClick)="location.back()"
+          [raised]="true"
+        />
         <app-add-restaurant-dialog />
       </div>
       @if (

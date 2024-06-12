@@ -36,15 +36,18 @@ import { Category } from '../../../interfaces/category';
       <div class="flex justify-content-end gap-2 py-3">
         <p-button
           label="Annuler"
-          severity="danger"
+          severity="contrast"
           (click)="onCancel()"
           size="small"
+          [raised]="true"
         />
         <p-button
           label="Modifier"
+          severity="secondary"
           (click)="onSave()"
           size="small"
           [disabled]="updateCategoryForm.invalid"
+          [raised]="true"
         />
       </div>
     </p-dialog>
