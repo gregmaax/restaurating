@@ -40,6 +40,21 @@ import { ButtonModule } from 'primeng/button';
       }
     </div>
     <div class="flex flex-col gap-1 mt-2">
+      <label for="email">Nom d'utilisateur</label>
+      <input
+        pInputText
+        id="displayName"
+        aria-describedby="displayName-help"
+        formControlName="displayName"
+      />
+      @if (
+        (registerForm.controls.email.dirty || form.submitted) &&
+        !registerForm.controls.email.valid
+      ) {
+        <small>Un nom d'utilisateur est obligatoire.</small>
+      }
+    </div>
+    <div class="flex flex-col gap-1 mt-2">
       <label for="password">Mot de passe</label>
       <p-password
         [toggleMask]="true"
@@ -101,6 +116,7 @@ export class RegisterFormComponent {
   registerForm = this.fb.nonNullable.group(
     {
       email: ['', [Validators.email, Validators.required]],
+      displayName: ['', [Validators.required]],
       password: ['', [Validators.minLength(8), Validators.required]],
       confirmPassword: ['', [Validators.required]],
     },

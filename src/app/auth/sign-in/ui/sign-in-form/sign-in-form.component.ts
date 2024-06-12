@@ -1,5 +1,8 @@
 import { Component, inject, input, output } from '@angular/core';
-import { Credentials } from '../../../../shared/interfaces/credentials';
+import {
+  Credentials,
+  SignInCredentials,
+} from '../../../../shared/interfaces/credentials';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { SignInStatus } from '../../data-access/sign-in.service';
 import { ButtonModule } from 'primeng/button';
@@ -76,7 +79,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 })
 export class SignInFormComponent {
   signInStatus = input.required<SignInStatus>();
-  signIn = output<Credentials>();
+  signIn = output<SignInCredentials>();
   googleSignIn = output();
 
   private fb = inject(FormBuilder);
