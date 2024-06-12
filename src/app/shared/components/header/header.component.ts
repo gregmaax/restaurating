@@ -22,7 +22,6 @@ import { ButtonModule } from 'primeng/button';
         <p-menubar [model]="items" [styleClass]="'border-none bg-neutral-200'">
           <ng-template pTemplate="item" let-item>
             <a [routerLink]="item.url" class="p-menuitem-link">
-              <span [class]="item.icon"></span>
               <span class="ml-2">{{ item.label }}</span>
             </a>
           </ng-template>
@@ -53,18 +52,18 @@ export class HeaderComponent {
   items: MenuItem[] = [
     {
       label: 'Accueil',
-      icon: 'pi pi-home',
+      //icon: 'pi pi-home',
       url: '/home',
     },
     {
       label: 'Categories',
-      icon: 'pi pi-list',
+      //icon: 'pi pi-list',
       url: '/categories',
     },
     {
-      label: 'Classements',
-      icon: 'pi pi-star',
-      url: '/rankings',
+      label: 'Restaurants',
+      //icon: 'pi pi-star',
+      url: '/restaurants',
     },
   ];
 }
