@@ -39,7 +39,7 @@ export default class RegisterComponent {
   constructor() {
     effect(() => {
       if (this.authService.user()) {
-        this.router.navigate(['home']);
+        this.router.navigate(['categories']);
       }
     });
   }

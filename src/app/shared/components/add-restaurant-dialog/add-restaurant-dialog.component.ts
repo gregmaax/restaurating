@@ -40,7 +40,12 @@ import { CategoryService } from '../../data-access/category.service';
           (click)="onCancel()"
           size="small"
         />
-        <p-button label="Ajouter" (click)="onSave()" size="small" />
+        <p-button
+          label="Ajouter"
+          (click)="onSave()"
+          size="small"
+          [disabled]="restaurantForm.invalid"
+        />
       </div>
     </p-dialog>
   `,
@@ -65,9 +70,9 @@ export class AddRestaurantDialogComponent {
       '',
       [Validators.required, Validators.minLength(3), Validators.maxLength(25)],
     ],
-    comment: [''],
+    comment: ['', Validators.maxLength(35)],
     rating: ['', [Validators.min(0), Validators.max(5)]],
-    city: [''],
+    city: ['', Validators.required],
   });
 
   showDialog() {

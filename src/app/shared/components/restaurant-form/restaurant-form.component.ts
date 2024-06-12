@@ -37,35 +37,79 @@ import { RatingModule } from 'primeng/rating';
               formGroup.invalid && formGroup.controls['name'].errors
           }"
         />
-        @if (formGroup.invalid && formGroup.controls['name'].errors) {
+        @if (
+          formGroup.invalid && formGroup.controls['name'].hasError('required')
+        ) {
+          <small class="text-red-600 text-xs ml-2"> Le nom est requis. </small>
+        } @else if (
+          formGroup.invalid &&
+          (formGroup.controls['name'].hasError('minlength') ||
+            formGroup.controls['name'].hasError('maxlength'))
+        ) {
           <small class="text-red-600 text-xs ml-2">
-            Le titre doit contenir entre 3 et 25 caractères...
+            Le nom doit contenir entre 3 et 25 caractères...
           </small>
         }
       </div>
       <div class="flex flex-col mt-2 gap-2">
-        <small>Qu'avez-vous pensé de ce restaurant ?</small>
+        <small
+          [ngClass]="{
+            'text-red-600':
+              formGroup.invalid && formGroup.controls['comment'].errors
+          }"
+          >Qu'avez-vous pensé de ce restaurant ?</small
+        >
         <textarea
           id="restaurant-comment"
           rows="2"
           cols="36"
           formControlName="comment"
           placeholder=""
+          [ngClass]="{
+            'ng-invalid ng-dirty':
+              formGroup.invalid && formGroup.controls['comment'].errors
+          }"
           pInputTextarea
         >
         </textarea>
+        @if (formGroup.invalid && formGroup.controls['comment'].errors) {
+          <small class="text-red-600 text-xs ml-2">
+            35 caractères maximum.
+          </small>
+        }
       </div>
       <div class="flex flex-col gap-1">
         <label for="restaurant-rating">Note</label>
         <p-rating formControlName="rating" />
       </div>
       <div class="flex flex-col gap-1 mt-2">
-        <label for="restaurant-city">Ville</label>
+        <label
+          for="restaurant-city"
+          [ngClass]="{
+            'text-red-600':
+              formGroup.invalid && formGroup.controls['city'].errors
+          }"
+          >Ville</label
+        >
         <input pInputText id="restaurant-city" formControlName="city" />
+        @if (
+          formGroup.invalid && formGroup.controls['city'].hasError('required')
+        ) {
+          <small class="text-red-600 text-xs ml-2">
+            La ville est requise.
+          </small>
+        }
       </div>
     </form>
   `,
-  styles: ``,
+  styles: `
+    :host ::ng-deep .p-rating-icon:not(.p-rating-cancel),
+    :host ::ng-deep .p-rating-icon:not(.p-rating-cancel):hover {
+      color: goldenrod !important;
+      width: 20px !important;
+      height: 20px !important;
+    }
+  `,
 })
 export class RestaurantFormComponent {
   @Input() formGroup!: FormGroup;

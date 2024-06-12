@@ -3,6 +3,7 @@ import {
   Component,
   inject,
   input,
+  OnInit,
   signal,
 } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
@@ -44,13 +45,18 @@ import { RestaurantCommentFormComponent } from './restaurant-comment-form/restau
           (click)="onCancel()"
           size="small"
         />
-        <p-button label="Modifier" (click)="onSave()" size="small" />
+        <p-button
+          label="Modifier"
+          (click)="onSave()"
+          size="small"
+          [disabled]="updateCommentForm.invalid"
+        />
       </div>
     </p-dialog>
   `,
   styles: ``,
 })
-export class UpdateRestaurantCommentDialogComponent {
+export class UpdateRestaurantCommentDialogComponent implements OnInit {
   visible = signal(false);
   restaurantToUpdate = input<Restaurant>();
   formBuilder = inject(FormBuilder);
@@ -60,14 +66,7 @@ export class UpdateRestaurantCommentDialogComponent {
 
   ngOnInit(): void {
     this.updateCommentForm = this.formBuilder.nonNullable.group({
-      comment: [
-        this.restaurantToUpdate()?.comment,
-        [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(25),
-        ],
-      ],
+      comment: [this.restaurantToUpdate()?.comment, Validators.maxLength(35)],
     });
   }
 

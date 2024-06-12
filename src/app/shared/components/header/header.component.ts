@@ -51,11 +51,6 @@ export class HeaderComponent {
 
   items: MenuItem[] = [
     {
-      label: 'Accueil',
-      //icon: 'pi pi-home',
-      url: '/home',
-    },
-    {
       label: 'Categories',
       //icon: 'pi pi-list',
       url: '/categories',

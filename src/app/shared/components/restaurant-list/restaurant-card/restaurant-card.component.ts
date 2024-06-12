@@ -1,4 +1,11 @@
-import { Component, inject, Input, input, output } from '@angular/core';
+import {
+  Component,
+  inject,
+  Input,
+  input,
+  output,
+  ViewEncapsulation,
+} from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { DeleteRestaurant, Restaurant } from '../../../interfaces/restaurant';
 import { RatingModule } from 'primeng/rating';
@@ -30,9 +37,12 @@ import { UpdateRestaurantCommentDialogComponent } from '../update-restaurant-com
     >
       <!-- card header -->
       <div
-        class="h-[90px] px-4 py-4 border-b border-zinc-600 font-bold uppercase flex justify-center items-center text-center"
+        class="h-[90px] px-4 py-4 border-b border-zinc-600 font-bold uppercase flex flex-col gap-3 justify-center items-center text-center"
       >
-        {{ restaurant().name }}
+        <span>{{ restaurant().name }}</span>
+        <span>
+          <small class="font-normal">{{ restaurant().city }}</small>
+        </span>
       </div>
 
       <!-- card body -->
@@ -44,6 +54,7 @@ import { UpdateRestaurantCommentDialogComponent } from '../update-restaurant-com
               [(ngModel)]="restaurant().rating"
               [readonly]="true"
               [cancel]="false"
+              [iconOnStyle]="{ color: '#4743fb' }"
             />
           </div>
         } @else {
@@ -82,7 +93,14 @@ import { UpdateRestaurantCommentDialogComponent } from '../update-restaurant-com
       </div>
     </div>
   `,
-  styles: ``,
+  styles: `
+    :host ::ng-deep .p-rating-icon:not(.p-rating-cancel),
+    :host ::ng-deep .p-rating-icon:not(.p-rating-cancel):hover {
+      color: goldenrod !important;
+      width: 20px !important;
+      height: 20px !important;
+    }
+  `,
 })
 export class RestaurantCardComponent {
   restaurant = input.required<Restaurant>();

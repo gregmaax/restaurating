@@ -44,7 +44,13 @@ import { RippleModule } from 'primeng/ripple';
           (click)="onCancel()"
           size="small"
         />
-        <p-button label="Ajouter" pRipple (click)="onSave()" size="small" />
+        <p-button
+          label="Ajouter"
+          pRipple
+          (click)="onSave()"
+          size="small"
+          [disabled]="categoryForm.invalid"
+        />
       </div>
     </p-dialog>
   `,
@@ -61,7 +67,7 @@ export class AddCategoryDialogComponent {
       '',
       [Validators.required, Validators.minLength(3), Validators.maxLength(25)],
     ],
-    description: [''],
+    description: ['', Validators.maxLength(100)],
   });
 
   showDialog() {

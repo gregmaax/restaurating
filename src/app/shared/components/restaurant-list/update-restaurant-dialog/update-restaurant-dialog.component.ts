@@ -45,7 +45,12 @@ import { RestaurantService } from '../../../data-access/restaurant.service';
           (click)="onCancel()"
           size="small"
         />
-        <p-button label="Modifier" (click)="onSave()" size="small" />
+        <p-button
+          label="Modifier"
+          (click)="onSave()"
+          size="small"
+          [disabled]="updateRestaurantForm.invalid"
+        />
       </div>
     </p-dialog>
   `,

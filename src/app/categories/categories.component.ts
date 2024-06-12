@@ -10,7 +10,11 @@ import { CategoryService } from '../shared/data-access/category.service';
   template: `
     <div class="container w-full mx-auto my-12 flex flex-col gap-6">
       <app-add-category-dialog />
-      <app-category-list [categories]="categoryService.categories()" />
+      @if (categoryService.categories().length > 0) {
+        <app-category-list [categories]="categoryService.categories()" />
+      } @else {
+        <span>Aucune catégorie ajoutée.</span>
+      }
     </div>
   `,
   styles: ``,

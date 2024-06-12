@@ -47,7 +47,7 @@ export default class SignInComponent {
   constructor() {
     effect(() => {
       if (this.authService.user()) {
-        this.router.navigate(['home']);
+        this.router.navigate(['categories']);
       }
     });
   }

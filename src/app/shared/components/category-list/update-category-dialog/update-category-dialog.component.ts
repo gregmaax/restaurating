@@ -40,7 +40,12 @@ import { Category } from '../../../interfaces/category';
           (click)="onCancel()"
           size="small"
         />
-        <p-button label="Modifier" (click)="onSave()" size="small" />
+        <p-button
+          label="Modifier"
+          (click)="onSave()"
+          size="small"
+          [disabled]="updateCategoryForm.invalid"
+        />
       </div>
     </p-dialog>
   `,
@@ -63,7 +68,10 @@ export class UpdateCategoryDialogComponent implements OnInit {
           Validators.maxLength(25),
         ],
       ],
-      description: [this.categoryToUpdate()?.description],
+      description: [
+        this.categoryToUpdate()?.description,
+        Validators.maxLength(100),
+      ],
     });
   }
 

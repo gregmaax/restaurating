@@ -38,13 +38,23 @@ import { NgClass } from '@angular/common';
               formGroup.invalid && formGroup.controls['name'].errors
           }"
         />
-        @if (formGroup.invalid && formGroup.controls['name'].errors) {
+        @if (
+          formGroup.invalid && formGroup.controls['name'].hasError('required')
+        ) {
+          <small class="text-red-600 text-xs ml-2">
+            Le titre est requis.
+          </small>
+        } @else if (
+          formGroup.invalid &&
+          (formGroup.controls['name'].hasError('minlength') ||
+            formGroup.controls['name'].hasError('maxlength'))
+        ) {
           <small class="text-red-600 text-xs ml-2">
             Le titre doit contenir entre 3 et 25 caractères...
           </small>
         }
       </div>
-      <div class="flex flex-col items-start mt-2 gap-1">
+      <div class="flex flex-col items-start mt-3 gap-1">
         <label for="restaurant-rating">Note</label>
         <p-rating formControlName="rating" />
       </div>
