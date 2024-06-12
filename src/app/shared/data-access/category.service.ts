@@ -1,5 +1,10 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { AddCategory, Category, UpdateCategory } from '../interfaces/category';
+import {
+  AddCategory,
+  Category,
+  DeleteCategory,
+  UpdateCategory,
+} from '../interfaces/category';
 import { FIRESTORE } from '../../app.config';
 import {
   collection,
@@ -67,12 +72,16 @@ export class CategoryService {
         catchError((error) => of({ error })),
       ),
       this.delete$.pipe(
-        exhaustMap((id) => this.deleteCategory(id)),
+        exhaustMap((id) =>
+          this.deleteCategory(id).then(() => console.log('Done')),
+        ),
         ignoreElements(),
         catchError((error) => of({ error })),
       ),
       this.update$.pipe(
-        exhaustMap((updateCategory) => this.updateCategory(updateCategory)),
+        exhaustMap((updateCategory) =>
+          this.updateCategory(updateCategory).then(() => console.log('Done')),
+        ),
         ignoreElements(),
         catchError((error) => of({ error })),
       ),
@@ -92,8 +101,8 @@ export class CategoryService {
   }
 
   //delete a category
-  private deleteCategory(categoryId?: string) {
-    const categoryDocRef = doc(this.firestore, `categories/${categoryId}`);
+  private deleteCategory(id: DeleteCategory) {
+    const categoryDocRef = doc(this.firestore, `categories/${id}`);
     return deleteDoc(categoryDocRef);
   }
 

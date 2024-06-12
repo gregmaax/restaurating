@@ -1,5 +1,5 @@
 import { Component, inject, input } from '@angular/core';
-import { Category } from '../../interfaces/category';
+import { Category, DeleteCategory } from '../../interfaces/category';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { StyleClassModule } from 'primeng/styleclass';
@@ -7,11 +7,13 @@ import { CategoryCardComponent } from './category-card/category-card.component';
 import { RestaurantService } from '../../data-access/restaurant.service';
 import { RouterLink } from '@angular/router';
 import { CategoryService } from '../../data-access/category.service';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-category-list',
   standalone: true,
   imports: [CardModule, ButtonModule, CategoryCardComponent, RouterLink],
+  providers: [ConfirmationService],
   template: `
     <div class="flex flex-row flex-wrap gap-4 p-3">
       @for (category of categories(); track category.id) {
@@ -20,7 +22,7 @@ import { CategoryService } from '../../data-access/category.service';
           [restaurantCount]="
             restaurantService.countRestaurantsInCategory(category.id)
           "
-          (deleteCategory)="categoryService.delete$.next(category.id)"
+          (deleteCategory)="categoryService.delete$.next($event)"
         />
       }
     </div>
