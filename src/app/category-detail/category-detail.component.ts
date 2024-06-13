@@ -26,7 +26,7 @@ import { AddRestaurantDialogComponent } from '../shared/components/add-restauran
           (onClick)="location.back()"
           [raised]="true"
         />
-        <app-add-restaurant-dialog />
+        <app-add-restaurant-dialog [isOnRestaurantPage]="false" />
       </div>
       @if (
         restaurantService.getRestaurantsByCategory(category()?.id).length > 0

@@ -15,3 +15,5 @@ export type UpdateCategory = Pick<
   Category,
   'id' | 'name' | 'description' | 'updatedAt'
 >;
+
+export type SelectCategory = Pick<Category, 'id' | 'name'>;
