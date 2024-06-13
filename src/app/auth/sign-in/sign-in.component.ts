@@ -5,6 +5,7 @@ import { SignInService } from './data-access/sign-in.service';
 import { SignInFormComponent } from './ui/sign-in-form/sign-in-form.component';
 import { ButtonModule } from 'primeng/button';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-sign-in',
@@ -14,10 +15,11 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     ButtonModule,
     RouterLink,
     ProgressSpinnerModule,
+    CardModule,
   ],
   template: `
-    <div
-      class="container mx-auto mt-6 bg-zinc-300 shadow-xl w-1/3 p-2 rounded-xl"
+    <p-card
+      styleClass="container mx-auto mt-6 bg-zinc-300 shadow-xl w-1/3 p-2 rounded-xl"
     >
       <div class="mb-4 py-4 px-2 border-b border-zinc-600">
         <span class="font-bold text-3xl">Se connecter</span>
@@ -35,7 +37,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
           <small>Créer un compte</small>
         </a>
       </div>
-    </div>
+    </p-card>
   `,
   styles: ``,
 })
