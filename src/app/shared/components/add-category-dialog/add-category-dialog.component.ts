@@ -65,10 +65,7 @@ export class AddCategoryDialogComponent {
   messageService = inject(MessageService);
 
   categoryForm = this.formBuilder.nonNullable.group({
-    name: [
-      '',
-      [Validators.required, Validators.minLength(3), Validators.maxLength(25)],
-    ],
+    name: ['', [Validators.required, Validators.maxLength(25)]],
     description: ['', Validators.maxLength(100)],
   });
 

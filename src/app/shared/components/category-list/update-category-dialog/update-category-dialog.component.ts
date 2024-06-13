@@ -65,11 +65,7 @@ export class UpdateCategoryDialogComponent implements OnInit {
     this.updateCategoryForm = this.formBuilder.nonNullable.group({
       name: [
         this.categoryToUpdate()?.name,
-        [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(25),
-        ],
+        [Validators.required, Validators.maxLength(25)],
       ],
       description: [
         this.categoryToUpdate()?.description,

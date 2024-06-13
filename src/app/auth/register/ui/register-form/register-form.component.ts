@@ -97,7 +97,7 @@ import { ButtonModule } from 'primeng/button';
 
     <div class="mt-5">
       <p-button
-        styleClass="bg-sky-500 outline-none"
+        severity="contrast"
         label="Créer mon compte"
         type="submit"
         [disabled]="status() === 'creating'"

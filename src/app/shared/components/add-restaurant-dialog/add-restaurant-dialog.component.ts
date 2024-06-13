@@ -69,10 +69,7 @@ export class AddRestaurantDialogComponent {
   );
 
   restaurantForm = this.formBuilder.nonNullable.group({
-    name: [
-      '',
-      [Validators.required, Validators.minLength(3), Validators.maxLength(25)],
-    ],
+    name: ['', [Validators.required, Validators.maxLength(25)]],
     comment: ['', Validators.maxLength(35)],
     rating: ['', [Validators.min(0), Validators.max(5)]],
     city: ['', Validators.required],

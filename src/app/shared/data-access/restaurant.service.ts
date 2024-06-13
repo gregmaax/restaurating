@@ -175,7 +175,7 @@ export class RestaurantService {
   private getRestaurants() {
     const restaurantsCollection = query(
       collection(this.firestore, 'restaurants'),
-      orderBy('createdAt', 'desc'),
+      orderBy('name', 'asc'),
       where('userId', '==', this.authService.user()?.uid),
       //limit(50)
     );

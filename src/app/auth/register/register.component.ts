@@ -3,14 +3,15 @@ import { Router, RouterLink } from '@angular/router';
 import { RegisterService } from './data-access/register.service';
 import { AuthService } from '../../shared/data-access/auth.service';
 import { RegisterFormComponent } from './ui/register-form/register-form.component';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [RegisterFormComponent, RouterLink],
+  imports: [RegisterFormComponent, RouterLink, CardModule],
   template: `
-    <div
-      class="container mx-auto mt-6 bg-zinc-300 shadow-xl w-1/3 p-4 rounded-xl"
+    <p-card
+      styleClass="container mx-auto mt-6 bg-zinc-300 shadow-xl w-1/3 p-4 rounded-xl"
     >
       <div class="mb-4 py-4 px-2 border-b border-zinc-600">
         <span class="font-bold text-3xl">Créer un compte</span>
@@ -27,7 +28,7 @@ import { RegisterFormComponent } from './ui/register-form/register-form.componen
           <small>Connexion</small>
         </a>
       </div>
-    </div>
+    </p-card>
   `,
   styles: ``,
 })

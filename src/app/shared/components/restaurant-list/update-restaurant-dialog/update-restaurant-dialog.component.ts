@@ -70,11 +70,7 @@ export class UpdateRestaurantDialogComponent implements OnInit {
     this.updateRestaurantForm = this.formBuilder.nonNullable.group({
       name: [
         this.restaurantToUpdate()?.name,
-        [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(25),
-        ],
+        [Validators.required, Validators.maxLength(25)],
       ],
       rating: [
         this.restaurantToUpdate()?.rating,

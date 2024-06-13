@@ -110,7 +110,7 @@ export class CategoryService {
   private getCategories() {
     const categoriesCollection = query(
       collection(this.firestore, 'categories'),
-      orderBy('createdAt', 'desc'),
+      orderBy('name', 'asc'),
       where('userId', '==', this.authService.user()?.uid),
       //limit(50)
     );

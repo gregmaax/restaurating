@@ -25,7 +25,6 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
       [formGroup]="signInForm"
       (ngSubmit)="signIn.emit(signInForm.getRawValue())"
       #form="ngForm"
-      class="container px-2"
     >
       <div class="flex flex-col gap-1">
         <label for="email">Email</label>
@@ -40,7 +39,6 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
       <div class="flex flex-col gap-1 mt-2">
         <label for="password">Mot de passe</label>
         <p-password
-          [toggleMask]="true"
           id="password"
           aria-describedby="password-help"
           formControlName="password"
@@ -56,17 +54,17 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
         <p-progressSpinner ariaLabel="loading" styleClass="w-4rem h-4rem" />
       }
 
-      <div class="mt-5 flex flex-row gap-2">
+      <div class="mt-6 flex flex-row text-center gap-2">
         <p-button
-          styleClass="bg-sky-500 outline-none"
+          severity="contrast"
           label="Se connecter"
           type="submit"
           [disabled]="signInStatus() === 'authenticating'"
           size="small"
         />
         <p-button
-          styleClass="bg-sky-500 outline-none"
-          label="Google"
+          severity="contrast"
+          label="Continuer avec Google"
           icon="pi pi-google"
           (onClick)="googleSignIn.emit()"
           [disabled]="signInStatus() === 'authenticating'"

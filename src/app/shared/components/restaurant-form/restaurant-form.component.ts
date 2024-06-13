@@ -42,12 +42,10 @@ import { RatingModule } from 'primeng/rating';
         ) {
           <small class="text-red-600 text-xs ml-2"> Le nom est requis. </small>
         } @else if (
-          formGroup.invalid &&
-          (formGroup.controls['name'].hasError('minlength') ||
-            formGroup.controls['name'].hasError('maxlength'))
+          formGroup.invalid && formGroup.controls['name'].hasError('maxlength')
         ) {
           <small class="text-red-600 text-xs ml-2">
-            Le nom doit contenir entre 3 et 25 caractères...
+            25 caractères maximum
           </small>
         }
       </div>
