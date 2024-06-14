@@ -1,6 +1,7 @@
 import {
   ChangeDetectorRef,
   Component,
+  computed,
   inject,
   input,
   OnInit,
@@ -13,6 +14,7 @@ import { RestaurantNameRatingFormComponent } from './restaurant-name-rating-form
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Restaurant } from '../../../interfaces/restaurant';
 import { RestaurantService } from '../../../data-access/restaurant.service';
+import { CategoryService } from '../../../data-access/category.service';
 
 @Component({
   selector: 'app-update-restaurant-dialog',
@@ -37,7 +39,10 @@ import { RestaurantService } from '../../../data-access/restaurant.service';
       [(visible)]="visible"
       [style]="{ width: '25rem' }"
     >
-      <app-restaurant-name-rating-form [formGroup]="updateRestaurantForm" />
+      <app-restaurant-name-rating-form
+        [selectCategories]="categoriesToSelectList()"
+        [formGroup]="updateRestaurantForm"
+      />
       <div class="flex justify-content-end gap-2 py-3">
         <p-button
           label="Annuler"
@@ -63,8 +68,18 @@ export class UpdateRestaurantDialogComponent implements OnInit {
   visible = signal(false);
   restaurantToUpdate = input<Restaurant>();
   formBuilder = inject(FormBuilder);
+  categoryService = inject(CategoryService);
   restaurantService = inject(RestaurantService);
   updateRestaurantForm!: FormGroup;
+
+  categoriesToSelectList = computed(() =>
+    this.categoryService
+      .categories()
+      .map((category) => ({
+        id: category.id,
+        name: category.name.toUpperCase(),
+      })),
+  );
 
   ngOnInit(): void {
     this.updateRestaurantForm = this.formBuilder.nonNullable.group({
@@ -76,6 +91,7 @@ export class UpdateRestaurantDialogComponent implements OnInit {
         this.restaurantToUpdate()?.rating,
         [Validators.min(0), Validators.max(5)],
       ],
+      categoryId: [this.restaurantToUpdate()?.categoryId],
     });
   }
 
@@ -94,6 +110,7 @@ export class UpdateRestaurantDialogComponent implements OnInit {
       id: this.restaurantToUpdate()?.id,
       rating: this.updateRestaurantForm.value.rating as unknown as number,
       name: this.updateRestaurantForm.value.name as string,
+      categoryId: this.updateRestaurantForm.value.categoryId as string,
     });
     //this.updateRestaurantForm.reset();
   }

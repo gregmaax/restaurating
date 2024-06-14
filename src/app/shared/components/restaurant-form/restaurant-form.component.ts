@@ -52,12 +52,14 @@ import { SelectCategory } from '../../interfaces/category';
       </div>
       @if (isOnRestaurantPage()) {
         <div class="flex flex-col gap-1 mt-2">
+          <label for="restaurant-category">Catégorie</label>
           <p-dropdown
             formControlName="categoryId"
             [options]="selectCategories()"
             placeholder="Selectionnez une catégorie"
             optionLabel="name"
             optionValue="id"
+            styleClass="w-full"
           />
         </div>
       }

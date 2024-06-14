@@ -20,7 +20,7 @@ export type DeleteRestaurant = Restaurant['id'];
 
 export type UpdateRestaurant = Pick<
   Restaurant,
-  'id' | 'name' | 'rating' | 'updatedAt'
+  'id' | 'name' | 'rating' | 'updatedAt' | 'categoryId'
 >;
 
 export type UpdateRestaurantComment = Pick<
