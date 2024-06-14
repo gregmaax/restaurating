@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   imports: [],
   template: `
     <footer
-      class="flex items-center justify-center w-full fixed bottom-0 py-4 border-t-[1px] border-zinc-600 bg-neutral-200"
+      class="flex items-center justify-center w-full fixed bottom-0 py-4 border-t-[1px] bg-neutral-200 shadow"
     >
       <span class="pi pi-twitter"></span>
     </footer>

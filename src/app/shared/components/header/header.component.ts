@@ -4,19 +4,23 @@ import { MenuItem } from 'primeng/api';
 import { UserBadgeComponent } from './user-badge/user-badge.component';
 import { AuthService } from '../../data-access/auth.service';
 import { ButtonModule } from 'primeng/button';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MenubarModule, UserBadgeComponent, ButtonModule],
+  imports: [MenubarModule, UserBadgeComponent, ButtonModule, NgOptimizedImage],
   template: `
-    <header
-      class="container mx-auto flex justify-between px-6 border-b-[1px] border-zinc-600"
-    >
+    <header class="mx-auto flex justify-between px-6 border-b-[1px] shadow">
       <div class="flex items-center justify-center">
-        <span class="self-center font-semibold whitespace-nowrap"
-          >RESTAURATING</span
-        >
+        <img
+          ngSrc="../../../../assets/logo-2.svg"
+          alt="App Logo"
+          class="self-center font-semibold whitespace-nowrap"
+          height="60"
+          width="60"
+          priority
+        />
       </div>
       <div class="flex items-center justify-center ">
         <p-menubar [model]="items" [styleClass]="'border-none bg-neutral-200'">

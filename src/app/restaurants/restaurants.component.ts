@@ -4,6 +4,7 @@ import { CategoryListComponent } from '../shared/components/category-list/catego
 import { RestaurantListComponent } from '../shared/components/restaurant-list/restaurant-list.component';
 import { RestaurantService } from '../shared/data-access/restaurant.service';
 import { AddRestaurantDialogComponent } from '../shared/components/add-restaurant-dialog/add-restaurant-dialog.component';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-restaurants',
@@ -28,4 +29,8 @@ import { AddRestaurantDialogComponent } from '../shared/components/add-restauran
 })
 export default class RestaurantsComponent {
   restaurantService = inject(RestaurantService);
+
+  constructor(private titleService: Title) {
+    this.titleService.setTitle('Restaurating - Restaurants');
+  }
 }

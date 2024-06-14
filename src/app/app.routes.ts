@@ -10,15 +10,18 @@ export const routes: Routes = [
     path: 'categories',
     canActivate: [isAuthenticatedGuard()],
     loadComponent: () => import('./categories/categories.component'),
+    data: { title: 'Catégories' },
   },
   {
     path: 'categories/:id',
     loadComponent: () => import('./category-detail/category-detail.component'),
+    data: { title: 'Catégories' },
   },
   {
     path: 'restaurants',
     canActivate: [isAuthenticatedGuard()],
     loadComponent: () => import('./restaurants/restaurants.component'),
+    data: { title: 'Restaurants' },
   },
   {
     path: '',
