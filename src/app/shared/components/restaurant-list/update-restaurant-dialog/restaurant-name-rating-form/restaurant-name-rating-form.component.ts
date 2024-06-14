@@ -1,10 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, input, Input } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { PaginatorModule } from 'primeng/paginator';
 import { RatingModule } from 'primeng/rating';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NgClass } from '@angular/common';
+import { SelectCategory } from '../../../../interfaces/category';
 
 @Component({
   selector: 'app-restaurant-name-rating-form',
@@ -52,6 +53,21 @@ import { NgClass } from '@angular/common';
           </small>
         }
       </div>
+      <div class="flex flex-col gap-1 mt-3">
+        <label for="restaurant-category" class="flex items-start"
+          >Catégorie</label
+        >
+        <p-dropdown
+          formControlName="categoryId"
+          [options]="selectCategories()"
+          placeholder="Selectionnez une catégorie"
+          optionLabel="name"
+          optionValue="id"
+          styleClass="w-full"
+          id="restaurant-category"
+        />
+      </div>
+
       <div class="flex flex-col items-start mt-3 gap-1">
         <label for="restaurant-rating">Note</label>
         <p-rating formControlName="rating" />
@@ -62,4 +78,6 @@ import { NgClass } from '@angular/common';
 })
 export class RestaurantNameRatingFormComponent {
   @Input() formGroup!: FormGroup;
+  //isOnRestaurantPage = input.required<boolean>();
+  selectCategories = input<SelectCategory[]>();
 }

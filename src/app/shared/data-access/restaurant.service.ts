@@ -138,6 +138,7 @@ export class RestaurantService {
       name: restaurant.name,
       rating: restaurant.rating,
       updatedAt: Date.now(),
+      categoryId: restaurant.categoryId,
     });
   }
 

@@ -3,6 +3,7 @@ import { AddCategoryDialogComponent } from '../shared/components/add-category-di
 import { CategoryListComponent } from '../shared/components/category-list/category-list.component';
 import { RestaurantListComponent } from '../shared/components/restaurant-list/restaurant-list.component';
 import { RestaurantService } from '../shared/data-access/restaurant.service';
+import { AddRestaurantDialogComponent } from '../shared/components/add-restaurant-dialog/add-restaurant-dialog.component';
 
 @Component({
   selector: 'app-restaurants',
@@ -11,9 +12,11 @@ import { RestaurantService } from '../shared/data-access/restaurant.service';
     AddCategoryDialogComponent,
     CategoryListComponent,
     RestaurantListComponent,
+    AddRestaurantDialogComponent,
   ],
   template: `
     <div class="container w-full mx-auto my-12 flex flex-col gap-6">
+      <app-add-restaurant-dialog [isOnRestaurantPage]="true" />
       @if (restaurantService.restaurants().length > 0) {
         <app-restaurant-list [restaurants]="restaurantService.restaurants()" />
       } @else {
